@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "fKjiscZ1+fqzKYuV+wkxBBkrth+1hxUlYRY9HMmzxOQ=",
+  "Hash": "QPckaZih0sApxmJbQ2VAbQ2K1UtW6WNGZtzC9py+EZA=",
   "Source": "sbojWebApp",
   "BasePath": "_content/sbojWebApp",
   "Mode": "Default",
@@ -1193,6 +1193,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\lib\\jquery-validation-unobtrusive\\LICENSE.txt"
+    },
+    {
+      "Identity": "C:\\Users\\nvalc\\source\\repos\\NValchanov09\\sboj.bg\\sbojWebApp\\sbojWebApp\\wwwroot\\uploads\\nemetschek.jpg",
+      "SourceId": "sbojWebApp",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\nvalc\\source\\repos\\NValchanov09\\sboj.bg\\sbojWebApp\\sbojWebApp\\wwwroot\\",
+      "BasePath": "_content/sbojWebApp",
+      "RelativePath": "uploads/nemetschek.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\nemetschek.jpg"
     }
   ]
 }

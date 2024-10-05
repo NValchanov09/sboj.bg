@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("sbojWebApp")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+847e7454fe881843404f108434ef375e0ca2f3ba")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+840fd1aff126926cb0569dce25778d4b9cd45b46")]
 [assembly: System.Reflection.AssemblyProductAttribute("sbojWebApp")]
 [assembly: System.Reflection.AssemblyTitleAttribute("sbojWebApp")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

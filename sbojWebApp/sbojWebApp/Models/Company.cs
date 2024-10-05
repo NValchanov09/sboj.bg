@@ -9,7 +9,7 @@ namespace sbojWebApp.Models
         public string? Description { get; set; }
         public string? ImagePath { get; set; }
         public string? Website { get; set; }
-        public string? Twitter { get; set; }
+        public string? LinkedIn { get; set; }
         public string? Facebook { get; set; }
         public string? PhoneNumber { get; set; }
         public string? Email { get; set; }

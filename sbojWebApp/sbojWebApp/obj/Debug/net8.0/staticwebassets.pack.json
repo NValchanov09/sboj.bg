@@ -245,6 +245,10 @@
       "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.min.map"
     },
     {
+      "Id": "C:\\Users\\nvalc\\source\\repos\\NValchanov09\\sboj.bg\\sbojWebApp\\sbojWebApp\\wwwroot\\uploads\\nemetschek.jpg",
+      "PackagePath": "staticwebassets\\uploads\\nemetschek.jpg"
+    },
+    {
       "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.build.sbojWebApp.props",
       "PackagePath": "build\\sbojWebApp.props"
     },
