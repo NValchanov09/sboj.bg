@@ -15,5 +15,6 @@ namespace sbojWebApp.Models
         [ForeignKey("AppUser")]
         public string? AppUserId { get; set; }
         public AppUser? AppUser { get; set; }
+        public bool? Status { get; set; } // True = Application has been reviewed, False = Application has not been reviewed
     }
 }
