@@ -18,6 +18,14 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes =
 build_property.MSBuildProjectDirectory = C:\Users\nvalc\source\repos\NValchanov09\sboj.bg\sbojWebApp\sbojWebApp
 build_property._RazorSourceGeneratorDebug = 
 
+[C:/Users/nvalc/source/repos/NValchanov09/sboj.bg/sbojWebApp/sbojWebApp/Views/City/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2l0eVxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/nvalc/source/repos/NValchanov09/sboj.bg/sbojWebApp/sbojWebApp/Views/Company/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29tcGFueVxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/nvalc/source/repos/NValchanov09/sboj.bg/sbojWebApp/sbojWebApp/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
