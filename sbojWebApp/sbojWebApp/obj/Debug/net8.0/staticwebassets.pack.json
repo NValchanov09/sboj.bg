@@ -245,8 +245,20 @@
       "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.min.map"
     },
     {
+      "Id": "C:\\Users\\nvalc\\source\\repos\\NValchanov09\\sboj.bg\\sbojWebApp\\sbojWebApp\\wwwroot\\uploads\\bosch.png",
+      "PackagePath": "staticwebassets\\uploads\\bosch.png"
+    },
+    {
+      "Id": "C:\\Users\\nvalc\\source\\repos\\NValchanov09\\sboj.bg\\sbojWebApp\\sbojWebApp\\wwwroot\\uploads\\mypos.png",
+      "PackagePath": "staticwebassets\\uploads\\mypos.png"
+    },
+    {
       "Id": "C:\\Users\\nvalc\\source\\repos\\NValchanov09\\sboj.bg\\sbojWebApp\\sbojWebApp\\wwwroot\\uploads\\nemetschek.jpg",
       "PackagePath": "staticwebassets\\uploads\\nemetschek.jpg"
+    },
+    {
+      "Id": "C:\\Users\\nvalc\\source\\repos\\NValchanov09\\sboj.bg\\sbojWebApp\\sbojWebApp\\wwwroot\\uploads\\а1.jpeg",
+      "PackagePath": "staticwebassets\\uploads\\а1.jpeg"
     },
     {
       "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.build.sbojWebApp.props",

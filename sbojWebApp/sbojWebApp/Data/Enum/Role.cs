@@ -1,6 +1,6 @@
 ﻿namespace sbojWebApp.Data.Enum
 {
-    public enum UserRole
+    public enum Role
     {
         Applicant,
         Recruiter,
