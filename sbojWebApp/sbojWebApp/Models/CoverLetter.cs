@@ -6,8 +6,7 @@ namespace sbojWebApp.Models
     public class CoverLetter
     {
         public int Id { get; set; }
-        [Required]
-        public string Body { get; set; }
-        public string Conclusion { get; set; }
+        public string? Body { get; set; }
+        public string? Conclusion { get; set; }
     }
 }

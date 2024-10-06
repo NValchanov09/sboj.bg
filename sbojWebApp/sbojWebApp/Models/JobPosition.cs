@@ -6,46 +6,40 @@ namespace sbojWebApp.Models
     public class JobPosition
     {
         public int Id { get; set; }
-        [Required]
-        public string Title { get; set; }
-        [Required]
-        public string Description { get; set; } 
+        public string? Title { get; set; }
+        public string? Description { get; set; } 
 
         public DateTime CreationDate { get; set; } = DateTime.Now;
-        [Required]
-        public string EmploymentRole { get; set; }
+        public string? EmploymentRole { get; set; }
 
         [Range(0, int.MaxValue, ErrorMessage = "Salary must be a positive number.")]
-        public int SalaryLow { get; set; }
+        public int? SalaryLow { get; set; }
         [Range(0, int.MaxValue, ErrorMessage = "Salary must be a positive number.")]
-        public int SalaryHigh { get; set; }
+        public int? SalaryHigh { get; set; }
 
         [Range(0, int.MaxValue, ErrorMessage = "Experience must be a positive number.")]
-        public int ExperienceLow { get; set; }
+        public int? ExperienceLow { get; set; }
         [Range(0, int.MaxValue, ErrorMessage = "Experience must be a positive number.")]
-        public int ExperienceHigh { get; set; }
+        public int? ExperienceHigh { get; set; }
 
         [Range(0, int.MaxValue, ErrorMessage = "Vacation days must be a positive number.")]
-        public int VacationDaysLow { get; set; }
+        public int? VacationDaysLow { get; set; }
         [Range(0, int.MaxValue, ErrorMessage = "Vacation days must be a positive number.")]
-        public int VacationDaysHigh { get; set; }
+        public int? VacationDaysHigh { get; set; }
 
         public ICollection<Language> RequiredLanguages { get; set; } = new List<Language>();
         public ICollection<JobApplication> Applications { get; set; } = new List<JobApplication>();
 
         [ForeignKey("City")]
-        [Required]
-        public int CityId { get; set; }
-        public City City { get; set; }
+        public int? CityId { get; set; }
+        public City? City { get; set; }
 
         [ForeignKey("Company")]
-        [Required]
-        public int CompanyId { get; set; }
-        public Company Company { get; set; }
+        public int? CompanyId { get; set; }
+        public Company? Company { get; set; }
 
         [ForeignKey("AppUser")]
-        [Required]
-        public string AppUserId { get; set; }
-        public AppUser AppUser { get; set; }
+        public string? AppUserId { get; set; }
+        public AppUser? AppUser { get; set; }
     }
 }

@@ -17,5 +17,6 @@ namespace sbojWebApp.Data
         public DbSet<Language> Languages { get; set; }
         public DbSet<CoverLetter> CoverLetters { get; set; }
         public DbSet<AppUser> AppUsers { get; set; }
+
     }
 }
