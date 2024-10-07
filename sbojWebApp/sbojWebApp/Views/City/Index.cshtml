@@ -1,43 +1,91 @@
-﻿@model X.PagedList.IPagedList<sbojWebApp.Models.City>
-@using X.PagedList.Mvc.Core;
+﻿@model IEnumerable<sbojWebApp.Models.City>
 
-<div class="container mt-5">
-    <!-- Create button -->
-    <div class="row mb-3">
-        <div class="col-md-12">
-            <a href="@Url.Action("Create", "City")" class="btn btn-primary">Create New City</a>
-        </div>
-    </div>
+@{
+    ViewData["Title"] = "Index";
 
-    <!-- Bootstrap table to display cities -->
-    <table class="table table-striped table-bordered">
-        <thead>
+    Pager pager = new Pager();
+
+    int pageNo = 0;
+    if(ViewBag.Pager != null)
+    {
+        pager = ViewBag.Pager;
+        pageNo = pager.CurrentPage;
+    }
+}
+
+<h1>Manage Cities</h1>
+
+<p>
+    <a asp-action="Create">Create a new City</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Latitude)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Longitude)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
             <tr>
-                <th>Name</th>
-                <th>Latitude</th>
-                <th>Longitude</th>
-                <th>Actions</th>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Latitude)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Longitude)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
             </tr>
-        </thead>
-        <tbody>
-            @foreach (var city in Model)
-            {
-                <tr>
-                    <td>@city.Name</td>
-                    <td>@city.Latitude</td>
-                    <td>@city.Longitude</td>
-                    <td>
-                        <a href="@Url.Action("Details", "City", new { id = city.Id })" class="btn btn-info btn-sm">Details</a>
-                        <a href="@Url.Action("Edit", "City", new { id = city.Id })" class="btn btn-warning btn-sm">Edit</a>
-                        <a href="@Url.Action("Delete", "City", new { id = city.Id })" class="btn btn-danger btn-sm">Delete</a>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
+        }
+    </tbody>
+</table>
 
-    <!-- Pagination controls -->
-    <div class="d-flex justify-content-center">
-        @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
-    </div>
+<h4> Showing items from <b>@pager.StartItemsShowing</b> to <b>@pager.EndItemsShowing</b> </h4>
+    
+<div class="container">
+    @if(pager.TotalPages > 0)
+    {
+        <ul class="pagination justify-content-center">
+            @if (pager.CurrentPage > 1)
+            {
+                <li class="page-item">
+                    <a class="page-link" asp-controller="City" asp-action="Index" asp-route-page="1">First</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" asp-controller="City" asp-action="Index" asp-route-page="@(pager.CurrentPage - 1)">Previous</a>
+                </li>
+            }
+            @for(var pg = pager.StartPage; pg <= pager.EndPage; pg++)
+            {
+                <li class="page-item @(pg == pager.CurrentPage ? "active" : "")">
+                    <a class="page-link" asp-controller="City" asp-action="Index" asp-route-page="@pg"> @pg </a>
+                </li>
+            }
+            @if(pager.CurrentPage < pager.TotalPages)
+            {
+                <li class="page-item">
+                    <a class="page-link" asp-controller="City" asp-action="Index" asp-route-page="@(pager.CurrentPage + 1)">Next</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" asp-controller="City" asp-action="Index" asp-route-page="@(pager.TotalPages)">Last</a>
+                </li>
+            }
+        </ul>
+    }
 </div>

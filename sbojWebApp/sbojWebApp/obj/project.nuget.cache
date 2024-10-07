@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "AXVVKNumaNY=",
+  "dgSpecHash": "gVqLQwoW6RY=",
   "success": true,
-  "projectFilePath": "C:\\Users\\GRIGS\\source\\repos\\NValchanov09\\sboj.bg\\sbojWebApp\\sbojWebApp\\sbojWebApp.csproj",
+  "projectFilePath": "C:\\Users\\GRIGS\\Source\\Repos\\NValchanov09\\sboj.bg\\sbojWebApp\\sbojWebApp\\sbojWebApp.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\GRIGS\\.nuget\\packages\\azure.core\\1.35.0\\azure.core.1.35.0.nupkg.sha512",
     "C:\\Users\\GRIGS\\.nuget\\packages\\azure.identity\\1.10.3\\azure.identity.1.10.3.nupkg.sha512",

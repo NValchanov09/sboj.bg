@@ -1,15 +1,15 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\GRIGS\\source\\repos\\NValchanov09\\sboj.bg\\sbojWebApp\\sbojWebApp\\sbojWebApp.csproj": {}
+    "C:\\Users\\GRIGS\\Source\\Repos\\NValchanov09\\sboj.bg\\sbojWebApp\\sbojWebApp\\sbojWebApp.csproj": {}
   },
   "projects": {
-    "C:\\Users\\GRIGS\\source\\repos\\NValchanov09\\sboj.bg\\sbojWebApp\\sbojWebApp\\sbojWebApp.csproj": {
+    "C:\\Users\\GRIGS\\Source\\Repos\\NValchanov09\\sboj.bg\\sbojWebApp\\sbojWebApp\\sbojWebApp.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\GRIGS\\source\\repos\\NValchanov09\\sboj.bg\\sbojWebApp\\sbojWebApp\\sbojWebApp.csproj",
+        "projectUniqueName": "C:\\Users\\GRIGS\\Source\\Repos\\NValchanov09\\sboj.bg\\sbojWebApp\\sbojWebApp\\sbojWebApp.csproj",
         "projectName": "sbojWebApp",
-        "projectPath": "C:\\Users\\GRIGS\\source\\repos\\NValchanov09\\sboj.bg\\sbojWebApp\\sbojWebApp\\sbojWebApp.csproj",
+        "projectPath": "C:\\Users\\GRIGS\\Source\\Repos\\NValchanov09\\sboj.bg\\sbojWebApp\\sbojWebApp\\sbojWebApp.csproj",
         "packagesPath": "C:\\Users\\GRIGS\\.nuget\\packages\\",
         "outputPath": "C:\\Users\\GRIGS\\source\\repos\\NValchanov09\\sboj.bg\\sbojWebApp\\sbojWebApp\\obj\\",
         "projectStyle": "PackageReference",

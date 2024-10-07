@@ -9,30 +9,39 @@ namespace sbojWebApp.Controllers
     public class CityController : Controller
     {
 		private readonly ApplicationDbContext _context;
-        private const int PageSize = 15;
+        public const int PageSize = 4;
 
-		public CityController(ApplicationDbContext context)
+        public CityController(ApplicationDbContext context)
 		{
 			_context = context;
 		}
 
         // GET: City
 
-        //public IActionResult Index()
-        //{
-        //    var cities = _context.Cities.ToList();
-        //    return View(cities);
-        //}
-
-        // GET: City (Page)
-        public IActionResult Index(int? page)
+        public IActionResult Index(int page = 1)
         {
-            int pageNumber = page ?? 1;
-            var cities = _context.Cities.OrderBy(c => c.Name).ToPagedList(pageNumber, PageSize);
-            return View(cities);
-        }
+            var cities = _context.Cities.ToList();
 
-        // GET: City/Details/id
+            if (page < 1)
+                page = 1;
+
+            int itemCount = cities.Count();
+
+            int itemsSkipped = (page - 1) * PageSize;
+
+            int startItemsShowing = itemsSkipped + 1;
+            int endItemsShowing = startItemsShowing + PageSize - 1;
+
+            var pager = new Pager(startItemsShowing, endItemsShowing, itemCount, page, PageSize);
+
+            var pageItems = cities.Skip(itemsSkipped).Take(PageSize).ToList();
+
+            this.ViewBag.Pager = pager;
+
+            //return View(cities);
+
+            return View(pageItems);
+        }
         public IActionResult Details(int? id)
         {
             if (id == null)
