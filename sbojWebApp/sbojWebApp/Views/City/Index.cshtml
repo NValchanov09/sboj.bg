@@ -13,79 +13,239 @@
     }
 }
 
-<h1>Manage Cities</h1>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 
-<p>
-    <a asp-action="Create">Create a new City</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Latitude)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Longitude)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Latitude)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Longitude)
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+<style>
 
-<h4> Showing items from <b>@pager.StartItemsShowing</b> to <b>@pager.EndItemsShowing</b> </h4>
-    
-<div class="container">
-    @if(pager.TotalPages > 0)
-    {
-        <ul class="pagination justify-content-center">
-            @if (pager.CurrentPage > 1)
-            {
-                <li class="page-item">
-                    <a class="page-link" asp-controller="City" asp-action="Index" asp-route-page="1">First</a>
-                </li>
-                <li class="page-item">
-                    <a class="page-link" asp-controller="City" asp-action="Index" asp-route-page="@(pager.CurrentPage - 1)">Previous</a>
-                </li>
-            }
-            @for(var pg = pager.StartPage; pg <= pager.EndPage; pg++)
-            {
-                <li class="page-item @(pg == pager.CurrentPage ? "active" : "")">
-                    <a class="page-link" asp-controller="City" asp-action="Index" asp-route-page="@pg"> @pg </a>
-                </li>
-            }
-            @if(pager.CurrentPage < pager.TotalPages)
-            {
-                <li class="page-item">
-                    <a class="page-link" asp-controller="City" asp-action="Index" asp-route-page="@(pager.CurrentPage + 1)">Next</a>
-                </li>
-                <li class="page-item">
-                    <a class="page-link" asp-controller="City" asp-action="Index" asp-route-page="@(pager.TotalPages)">Last</a>
-                </li>
-            }
-        </ul>
-    }
+body {
+	background: #ededed;
+	font-family: 'Varela Round', sans-serif;
+}
+
+.table-responsive {
+	margin: 40px 0;
+}
+.table-wrapper {
+	background: #fff;
+	padding: 20px 25px;
+	border-radius: 6px;
+	min-width: 1000px;
+	box-shadow: 0 1px 1px rgba(0,0,0,.05);
+}
+.table-title {
+	padding-bottom: 15px;
+	background: #435d7d;
+	color: #fff;
+	padding: 20px 30px;
+	margin: -20px -25px 10px;
+	border-radius: 6px 6px 0 0;
+}
+.table-title h2 {
+	margin: 7px 0 0;
+	font-size: 38px;
+}
+.table-title .btn-group {
+	float: right;
+}
+.table-title .btn {
+	float: right;
+	font-size: 19px;
+	min-width: 50px;
+	border-radius: 5px
+}
+.table-title .btn i {
+	float: left;
+	font-size: 27px;
+	margin-right: 5px;
+	margin-top: 5px;
+}
+
+.table-title .btn span {
+	float: left;
+	margin-top: 5px;
+}
+
+table.table tr th, table.table tr td {
+	border-color: #d9d9d9;
+	padding: 12px 15px;
+	vertical-align: middle;
+	border-top-width: 2px;
+	border-bottom-width: 2px;
+}
+
+table.table tr th{
+	border-top-width: 0px;
+	padding-top: 20px;
+	padding-bottom: 20px;
+}
+
+table.table-striped tbody tr:nth-of-type(odd) {
+	background-color: #fcfcfc;
+}
+table.table-striped.table-hover tbody tr:hover {
+	background: #f5f5f5;
+}
+table.table td:last-child i {
+	font-size: 31px;
+	margin-top: 10px;
+	margin-right: 15px;
+}
+
+table.table td a {
+	font-weight: bold;
+	color: #566787;
+	text-decoration: none;
+	outline: none !important;
+}
+table.table td a.edit {
+	color: #FFC107;
+}
+table.table td a.delete {
+	color: #F44336;
+}
+table.table td a.details {
+	color: #404040;
+}
+
+table.table th{
+	font-size: 20px;
+}
+
+table.table td:first-child{
+	padding-left: 35px;
+}
+
+table.table th:first-child{
+	padding-left: 35px;
+}
+
+table.table td:last-child, th:last-child {
+	text-align: center;
+}
+
+table.table th:last-child{
+	padding-left:0px;
+}
+
+table.table td:last-child{
+	border-left-width: 2px;
+}
+
+.pagination {
+	float: right;
+	margin: 0 0 5px;
+}
+.pagination li a {
+	border: none;
+	font-size: 13px;
+	min-width: 30px;
+	min-height: 30px;
+	color: #999;
+	margin: 0 3px;
+	line-height: 30px;
+	border-radius: 2px !important;
+	text-align: center;
+	padding: 0 6px;
+}
+.pagination li a:hover{
+	color: #666;
+}
+.pagination li.active a, .pagination li.active a.page-link {
+	background: #03A9F4;
+}
+.pagination li.active a:hover {
+	background: #0397d6;
+}
+.hint-text {
+	float: left;
+	margin-top: 9px;
+	margin-left: 10px;
+	font-size: 15px;
+	opacity: 0.7;
+}
+</style>
+
+
+<div class="container-xl">
+	<div class="table-responsive">
+		<div class="table-wrapper">
+
+			<div class="table-title">
+				<div class="row">
+					<div class="col-sm-6">
+						<h2>Manage <b>Cities</b></h2>
+					</div>
+					<div class="col-sm-6">
+                        <a asp-action="Create" class="btn btn-success" ><i class="material-icons">&#xE147;</i> <span>Add New City</span></a>
+					</div>
+				</div>
+			</div>
+
+			<table class="table table-striped table-hover">
+
+				<thead>
+					<tr>
+                        <th>@Html.DisplayNameFor(model => model.Name)</th>
+                        <th>@Html.DisplayNameFor(model => model.Latitude)</th>
+                        <th>@Html.DisplayNameFor(model => model.Longitude)</th>
+                        <th>Actions</th>
+					</tr>
+				</thead>
+
+				<tbody>
+                    @foreach (var item in Model)
+                    {
+					    <tr>
+                            <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Latitude)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Longitude)</td>
+						    <td>
+                                <a class="edit" asp-action="Edit" asp-route-id="@item.Id"><i class="material-icons" title="Edit">&#xE254;</i></a>
+                                <a class="details" asp-action="Details" asp-route-id="@item.Id"><i class="material-icons" title="Details">&#xe241;</i></a>
+                                <a class="delete" asp-action="Delete" asp-route-id="@item.Id"><i class="material-icons" title="Delete">&#xE872;</i></a>
+						    </td>
+					    </tr>
+                    }
+				</tbody>
+			</table>
+            <div class="clearfix">
+                <div class="hint-text">Showing items from <b>@pager.StartItemsShowing</b> to <b>@pager.EndItemsShowing</b> </div>
+                @if (pager.TotalPages > 0)
+                {
+                    <ul class="pagination">
+                        @if (pager.CurrentPage > 1)
+                        {
+                            <li class="page-item">
+                                <a class="page-link" asp-controller="City" asp-action="Index" asp-route-page="1">First</a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" asp-controller="City" asp-action="Index" asp-route-page="@(pager.CurrentPage - 1)">Previous</a>
+                            </li>
+                        }
+                        @for (var pg = pager.StartPage; pg <= pager.EndPage; pg++)
+                        {
+                            <li class="page-item @(pg == pager.CurrentPage ? "active" : "")">
+                                <a class="page-link" asp-controller="City" asp-action="Index" asp-route-page="@pg"> @pg </a>
+                            </li>
+                        }
+                        @if (pager.CurrentPage < pager.TotalPages)
+                        {
+                            <li class="page-item">
+                                <a class="page-link" asp-controller="City" asp-action="Index" asp-route-page="@(pager.CurrentPage + 1)">Next</a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" asp-controller="City" asp-action="Index" asp-route-page="@(pager.TotalPages)">Last</a>
+                            </li>
+                        }
+                    </ul>
+                }
+            </div>
+		</div>
+	</div>
 </div>
