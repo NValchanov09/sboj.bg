@@ -3,8 +3,9 @@ using sbojWebApp.Models;
 using sbojWebApp.Data;
 using System.Diagnostics;
 using System.Net;
+using Newtonsoft.Json;
 
-namespace RunGroopWebApp.Data
+namespace sbojWebApp.Data
 {
     public class Seed
     {
@@ -14,148 +15,41 @@ namespace RunGroopWebApp.Data
             {
                 var context = serviceScope.ServiceProvider.GetService<ApplicationDbContext>();
 
-                context.Database.EnsureCreated();
+                context.Database.EnsureCreated();   
 
                 if(!context.Cities.Any())
                 {
-                    context.Cities.AddRange(new List<City>()
-                    {
-                        new City()
-                        {
-                            Name = "Shumen",
-                            Latitude = 43.21,
-                            Longitude = 27.91,
-                        },
-                        new City()
-                        {
-                            Name = "Varna",
-                            Latitude = 43.28,
-                            Longitude = 26.93
-                        },
-                        new City()
-                        {
-                            Name = "Sofia",
-                            Latitude = 42.69,
-                            Longitude = 23.31
-                        },
-                        new City()
-                        {
-                            Name = "Plovdiv",
-                            Latitude = 38.34,
-                            Longitude = 24.24,
-                        },
-                        new City()
-                        {
-                            Name = "Vratsa",
-                            Latitude = 45.45,
-                            Longitude = 23.23,
-                        },
-                        new City()
-                        {
-                            Name = "Burgas",
-                            Latitude = 43.43,
-                            Longitude = 24.54,
-                        },
-                        new City()
-                        {
-                            Name = "Smyadovo",
-                            Latitude = 111.11,
-                            Longitude = 11.11,
-                        }
-                    });
-                    context.SaveChanges();
-                }
-
-                if (!context.Companies.Any())
-                {
-                    context.Companies.AddRange(new List<Company>()
-                    {
-                        new Company()
-                        {
-                            Name = "myPos",
-                            Description = "myPos description",
-                            ImagePath = "/uploads/mypos.png",
-                            Website = "https://www.mypos.com/",
-                            LinkedIn = "https://www.linkedin.com/company/mypos-official/",
-                            Facebook = "https://www.facebook.com/myposofficial/",
-                            Instagram = "help@mypos.com",
-                            PhoneNumber = "+359 88 409 9228",
-                            Recruiters = new List<AppUser>()
-                        },
-                        new Company()
-                        {
-                            Name = "Bosch",
-                            Description = "Bosch description",
-                            ImagePath = "/uploads/bosch.png",
-                            Website = "https://www.bosch.bg/",
-                            LinkedIn = "https://www.linkedin.com/company/mypos-official/",
-                            Facebook = "https://www.facebook.com/myposofficial/",
-                            Instagram = "https://www.instagram.com/boschhomebg/",
-                            PhoneNumber = "+359 12 345 6789",
-                            Recruiters = new List<AppUser>()
-                        },
-                        new Company()
-                        {
-                            Name = "Nemetschek",
-                            Description = "Nemetschek description",
-                            ImagePath = "/uploads/nemetschek.jpg",
-                            Website = "https://www.nemetschek.bg/",
-                            LinkedIn = "https://www.linkedin.com/company/nemetschek-bulgaria/",
-                            Facebook = "https://www.facebook.com/NemetschekBulgaria/",
-                            Instagram = "https://www.instagram.com/nemetschek.bulgaria/.bg",
-                            PhoneNumber = "+359 01 010 1010",
-                            Recruiters = new List<AppUser>()
-                        }
-                    });
-                    context.SaveChanges();
-                }
-                if (!context.Languages.Any())
-                {
-                    context.Languages.AddRange(new List<Language>()
-                    {
-                        new Language()
-                        {
-                            Name = "C#"
-                        },
-                        new Language()
-                        {
-                            Name = "C++"
-                        },
-                        new Language()
-                        {
-                            Name = "JavaScript"
-                        },
-                        new Language()
-                        {
-                            Name = "Java"
-                        },
-                        new Language()
-                        {
-                            Name = "Python"
-                        },
-                        new Language()
-                        {
-                            Name = "Ruby"
-                        },
-                        new Language()
-                        {
-                            Name = "mongoDB"
-                        },
-                        new Language()
-                        {
-                            Name = "SQL"
-                        },
-                        new Language()
-                        {
-                            Name = ".NET"
-                        }
-                    });
+                    var cities = LoadSeedDataFromJson<City>("cities.json");
+                    context.Cities.AddRange(cities);
                     context.SaveChanges();
                 }
             }
         }
-        
-        public static async Task SeedUsersAndRolesAsync(IApplicationBuilder applicationBuilder)
+
+		private static List<T> LoadSeedDataFromJson<T>(string fileName) where T : class
+		{
+			var filePath = Path.Combine(Directory.GetCurrentDirectory(), "Data", fileName);
+            Console.WriteLine($"Data exported to {filePath}");
+
+            if(!File.Exists(filePath))
+				return new List<T>();
+
+			var jsonData = File.ReadAllText(filePath);
+			var data = JsonConvert.DeserializeObject<List<T>>(jsonData);
+
+            foreach (var item in data)
+            {
+                var idProperty = typeof(T).GetProperty("Id");
+                if (idProperty != null && idProperty.PropertyType == typeof(int))
+                {
+                    idProperty.SetValue(item, 0);
+                }
+            }
+
+            return data ?? new List<T>();
+		}
+
+		public static async Task SeedUsersAndRolesAsync(IApplicationBuilder applicationBuilder)
         {
             using (var serviceScope = applicationBuilder.ApplicationServices.CreateScope())
             {

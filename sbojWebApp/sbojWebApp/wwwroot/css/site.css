@@ -16,7 +16,16 @@ html {
   position: relative;
   min-height: 100%;
 }
-
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
+    background: #ededed;
+    font-family: 'Varela Round', sans-serif;
+}
+
+.navbar-image{
+    height: 70px;
+}
+
+.nav-link{
+    font-size: 22px;
 }

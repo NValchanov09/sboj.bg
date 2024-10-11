@@ -275,3 +275,6 @@ C:\Users\GRIGS\source\repos\NValchanov09\sboj.bg\sbojWebApp\sbojWebApp\obj\Debug
 C:\Users\GRIGS\source\repos\NValchanov09\sboj.bg\sbojWebApp\sbojWebApp\obj\Debug\net8.0\sbojWebApp.MvcApplicationPartsAssemblyInfo.cs
 C:\Users\GRIGS\source\repos\NValchanov09\sboj.bg\sbojWebApp\sbojWebApp\bin\Debug\net8.0\X.PagedList.dll
 C:\Users\GRIGS\source\repos\NValchanov09\sboj.bg\sbojWebApp\sbojWebApp\bin\Debug\net8.0\X.PagedList.Mvc.Core.dll
+C:\Users\GRIGS\Source\Repos\NValchanov09\sboj.bg\sbojWebApp\sbojWebApp\bin\Debug\net8.0\CsvHelper.dll
+C:\Users\GRIGS\Source\Repos\NValchanov09\sboj.bg\sbojWebApp\sbojWebApp\bin\Debug\net8.0\Newtonsoft.Json.dll
+C:\Users\GRIGS\Source\Repos\NValchanov09\sboj.bg\sbojWebApp\sbojWebApp\bin\Debug\net8.0\Data\cities.json

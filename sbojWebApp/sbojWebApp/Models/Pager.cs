@@ -2,7 +2,7 @@
 {
     public class Pager
     {
-        private const int ShowPages = 6;
+        private const int ShowPages = 7;
         public int TotalItems { get; set; }
         public int CurrentPage { get; set; }
         public int PageSize { get; set; }

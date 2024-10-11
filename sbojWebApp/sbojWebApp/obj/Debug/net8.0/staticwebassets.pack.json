@@ -9,10 +9,6 @@
       "PackagePath": "staticwebassets\\css\\site.css"
     },
     {
-      "Id": "C:\\Users\\GRIGS\\Source\\Repos\\NValchanov09\\sboj.bg\\sbojWebApp\\sbojWebApp\\wwwroot\\favicon.ico",
-      "PackagePath": "staticwebassets\\favicon.ico"
-    },
-    {
       "Id": "C:\\Users\\GRIGS\\Source\\Repos\\NValchanov09\\sboj.bg\\sbojWebApp\\sbojWebApp\\wwwroot\\js\\site.js",
       "PackagePath": "staticwebassets\\js\\site.js"
     },
@@ -243,6 +239,26 @@
     {
       "Id": "C:\\Users\\GRIGS\\Source\\Repos\\NValchanov09\\sboj.bg\\sbojWebApp\\sbojWebApp\\wwwroot\\lib\\jquery\\dist\\jquery.min.map",
       "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.min.map"
+    },
+    {
+      "Id": "C:\\Users\\GRIGS\\Source\\Repos\\NValchanov09\\sboj.bg\\sbojWebApp\\sbojWebApp\\wwwroot\\logo_solid.png",
+      "PackagePath": "staticwebassets\\logo_solid.png"
+    },
+    {
+      "Id": "C:\\Users\\GRIGS\\Source\\Repos\\NValchanov09\\sboj.bg\\sbojWebApp\\sbojWebApp\\wwwroot\\logo_solid_cropped.png",
+      "PackagePath": "staticwebassets\\logo_solid_cropped.png"
+    },
+    {
+      "Id": "C:\\Users\\GRIGS\\Source\\Repos\\NValchanov09\\sboj.bg\\sbojWebApp\\sbojWebApp\\wwwroot\\logo_solid_text.png",
+      "PackagePath": "staticwebassets\\logo_solid_text.png"
+    },
+    {
+      "Id": "C:\\Users\\GRIGS\\Source\\Repos\\NValchanov09\\sboj.bg\\sbojWebApp\\sbojWebApp\\wwwroot\\logo_transparent.png",
+      "PackagePath": "staticwebassets\\logo_transparent.png"
+    },
+    {
+      "Id": "C:\\Users\\GRIGS\\Source\\Repos\\NValchanov09\\sboj.bg\\sbojWebApp\\sbojWebApp\\wwwroot\\logo_transparent_text.png",
+      "PackagePath": "staticwebassets\\logo_transparent_text.png"
     },
     {
       "Id": "C:\\Users\\GRIGS\\Source\\Repos\\NValchanov09\\sboj.bg\\sbojWebApp\\sbojWebApp\\wwwroot\\uploads\\bosch.png",

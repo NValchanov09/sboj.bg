@@ -3,24 +3,97 @@ using Microsoft.EntityFrameworkCore;
 using X.PagedList;
 using sbojWebApp.Data;
 using sbojWebApp.Models;
+using System.Xml;
+using Newtonsoft.Json;
+using System.IO;
+using System.Linq;
+using System.Globalization;
 
 namespace sbojWebApp.Controllers
 {
     public class CityController : Controller
     {
 		private readonly ApplicationDbContext _context;
-        public const int PageSize = 4;
+        public const int PageSize = 10;
 
         public CityController(ApplicationDbContext context)
 		{
 			_context = context;
 		}
 
-        // GET: City
-
-        public IActionResult Index(int page = 1)
+        private void SaveToJsonFile(City city)
         {
-            var cities = _context.Cities.ToList();
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "Data", "cities.json");
+            var cities = new List<City>();
+
+            if (System.IO.File.Exists(filePath))
+            {
+                var jsonData = System.IO.File.ReadAllText(filePath);
+                cities = JsonConvert.DeserializeObject<List<City>>(jsonData) ?? new List<City>();
+            }
+
+            cities.Add(city);
+
+            var updatedJson = JsonConvert.SerializeObject(cities, Newtonsoft.Json.Formatting.Indented);
+            System.IO.File.WriteAllText(filePath, updatedJson);
+        }
+
+        private void RemoveFromJsonFile(int id)
+        {
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "Data", "cities.json");
+
+            if (!System.IO.File.Exists(filePath))
+                return;
+
+            var jsonData = System.IO.File.ReadAllText(filePath);
+            var cities = JsonConvert.DeserializeObject<List<City>>(jsonData) ?? new List<City>();
+
+            var userToRemove = cities.SingleOrDefault(u => u.Id == id);
+            if (userToRemove != null)
+            {
+                cities.Remove(userToRemove);
+
+                var updatedJson = JsonConvert.SerializeObject(cities, Newtonsoft.Json.Formatting.Indented);
+                System.IO.File.WriteAllText(filePath, updatedJson);
+            }
+        }
+
+		public IActionResult ExportDataToJson()
+		{
+			var cities = _context.Cities.ToList();
+
+			var jsonData = JsonConvert.SerializeObject(cities, Newtonsoft.Json.Formatting.Indented);
+
+			var filePath = Path.Combine(Directory.GetCurrentDirectory(), "Data", "cities.json");
+			System.IO.File.WriteAllText(filePath, jsonData);
+
+			return Content($"Data exported to {filePath}");
+		}
+
+		// GET: City
+
+		public IActionResult Index(int page = 1, string sortBy = "id")
+        {
+            var cities = _context.Cities.AsQueryable();
+
+            switch(sortBy.ToLower())
+            {
+                case "name":
+                    cities = cities.OrderBy(c => c.Name);
+                    break;
+
+                case "latitude":
+                    cities = cities.OrderBy(c => c.Latitude);
+                    break;
+
+                case "longitude":
+                    cities = cities.OrderBy(c => c.Longitude);
+                    break;
+
+                default:
+                    cities = cities.OrderBy(c => c.Id);
+                    break;
+            }
 
             if (page < 1)
                 page = 1;
@@ -34,13 +107,17 @@ namespace sbojWebApp.Controllers
 
             var pager = new Pager(startItemsShowing, endItemsShowing, itemCount, page, PageSize);
 
-            var pageItems = cities.Skip(itemsSkipped).Take(PageSize).ToList();
-
             this.ViewBag.Pager = pager;
 
-            //return View(cities);
+            var sorter = new Sorter(sortBy);
 
-            return View(pageItems);
+            this.ViewBag.Sorter = sorter;
+
+			var pageItems = cities.Skip(itemsSkipped).Take(PageSize).ToList();
+
+			//return View(cities);
+
+			return View(pageItems);
         }
         public IActionResult Details(int? id)
         {
@@ -69,6 +146,7 @@ namespace sbojWebApp.Controllers
             {
                 _context.Add(city);
                 _context.SaveChanges();
+                //SaveToJsonFile(city);
                 return RedirectToAction(nameof(Index));
             }
             return View(city);
@@ -134,8 +212,11 @@ namespace sbojWebApp.Controllers
         public IActionResult DeleteConfirmed(int id)
         {
             var city = _context.Cities.Find(id);
-            _context.Cities.Remove(city);
+            _context.Cities.Remove(city);   
             _context.SaveChanges();
+
+           // RemoveFromJsonFile(id);
+
             return RedirectToAction(nameof(Index));
         }
 
