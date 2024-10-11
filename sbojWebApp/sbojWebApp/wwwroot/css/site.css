@@ -29,3 +29,11 @@ body {
 .nav-link{
     font-size: 22px;
 }
+
+.nav-item{
+    margin: 0 10px;
+}
+
+.navbar-nav .nav-item:first-child{
+    margin-left: 30px;
+}
