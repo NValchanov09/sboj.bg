@@ -47,7 +47,7 @@
             TotalPages = totalPages;
             StartPage = startPage;
             EndPage = endPage;
-            StartItemsShowing = startItemsShowing;
+            StartItemsShowing = Math.Min(startItemsShowing, TotalItems);
             EndItemsShowing = Math.Min(endItemsShowing, TotalItems);
         }
     }

@@ -70,8 +70,20 @@ namespace sbojWebApp.Controllers
 			return Content($"Data exported to {filePath}");
 		}
 
-		// GET: City
+        public IActionResult DeleteAll()
+        {
+            var cities = _context.Cities.ToList();
 
+            if(cities != null && cities.Count > 0)
+            {
+                _context.Cities.RemoveRange(cities);
+                _context.SaveChanges();
+            }
+
+            return Content($"Deleted everything from the table");
+        }
+
+		// GET: City
 		public IActionResult Index(int page = 1, string sortBy = "id")
         {
             var cities = _context.Cities.AsQueryable();
@@ -119,6 +131,8 @@ namespace sbojWebApp.Controllers
 
 			return View(pageItems);
         }
+
+        // GET: City/Details/id
         public IActionResult Details(int? id)
         {
             if (id == null)
@@ -146,7 +160,6 @@ namespace sbojWebApp.Controllers
             {
                 _context.Add(city);
                 _context.SaveChanges();
-                //SaveToJsonFile(city);
                 return RedirectToAction(nameof(Index));
             }
             return View(city);
@@ -214,8 +227,6 @@ namespace sbojWebApp.Controllers
             var city = _context.Cities.Find(id);
             _context.Cities.Remove(city);   
             _context.SaveChanges();
-
-           // RemoveFromJsonFile(id);
 
             return RedirectToAction(nameof(Index));
         }
