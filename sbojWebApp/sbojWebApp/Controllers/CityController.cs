@@ -15,7 +15,6 @@ namespace sbojWebApp.Controllers
     public class CityController : Controller
     {
 		private readonly ApplicationDbContext _context;
-        public const int PageSize = 10;
 
         public CityController(ApplicationDbContext context)
 		{
@@ -85,7 +84,7 @@ namespace sbojWebApp.Controllers
         }
 
 		// GET: City
-		public IActionResult Index(int page = 1, string sortBy = "id")
+		public IActionResult Index(int page = 1, int pageSize = 10, string sortBy = "id")
         {
             var cities = _context.Cities.AsQueryable();
 
@@ -108,17 +107,20 @@ namespace sbojWebApp.Controllers
                     break;
             }
 
-            if (page < 1)
-                page = 1;
-
             int itemCount = cities.Count();
 
-            int itemsSkipped = (page - 1) * PageSize;
+			if (page <= 0 || page > itemCount)
+				page = 1;
+
+            if (pageSize <= 0)
+                pageSize = 10;
+
+			int itemsSkipped = (page - 1) * pageSize;
 
             int startItemsShowing = itemsSkipped + 1;
-            int endItemsShowing = startItemsShowing + PageSize - 1;
+            int endItemsShowing = startItemsShowing + pageSize - 1;
 
-            var pager = new Pager(startItemsShowing, endItemsShowing, itemCount, page, PageSize);
+            var pager = new Pager(startItemsShowing, endItemsShowing, itemCount, page, pageSize);
 
             this.ViewBag.Pager = pager;
 
@@ -126,9 +128,7 @@ namespace sbojWebApp.Controllers
 
             this.ViewBag.Sorter = sorter;
 
-			var pageItems = cities.Skip(itemsSkipped).Take(PageSize).ToList();
-
-			//return View(cities);
+			var pageItems = cities.Skip(itemsSkipped).Take(pageSize).ToList();
 
 			return View(pageItems);
         }

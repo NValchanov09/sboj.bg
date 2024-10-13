@@ -245,6 +245,19 @@ table.table td:last-child{
 }
 
 </style>
+<div class="form-group">
+    <label for="pageSizeSelector">Cities per page:</label>
+    <select id="pageSizeSelector" class="form-control" style="width: auto; display: inline-block;">
+        <option value="5" @(pager.PageSize == 5 ? "selected" : "")>5</option>
+        <option value="10" @(pager.PageSize == 10 ? "selected" : "")>10</option>
+        <option value="20" @(pager.PageSize == 20 ? "selected" : "")>20</option>
+        <option value="50" @(pager.PageSize == 50 ? "selected" : "")>50</option>
+		@(pager.PageSize == 5 ? "selected" : "")
+    </select>
+</div>
+
+<input type="hidden" id="currentPage" value="@(pager.CurrentPage)" />
+<input type="hidden" id="sortingParameter" value="@(sorter.SortingParameter)" />
 
 <div class="container-xl">
 	<div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel" aria-hidden="true">
@@ -431,7 +444,6 @@ table.table td:last-child{
 				}
 			});
 
-			// Check if any cities are selected
 			if (selectedCities.length > 0) {
 				$('#confirmModal').modal('show');
 
@@ -441,13 +453,13 @@ table.table td:last-child{
 						url: '@Url.Action("DeleteSelectedCities", "City")',
 						type: 'POST',
 						contentType: 'application/json; charset=utf-8',
-						data: JSON.stringify(selectedCities), // Send selected city IDs
+						data: JSON.stringify(selectedCities),
 						headers: {
 							'RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val()
 						},
 						success: function (response) {
 							if (response.success) {
-								window.location.reload();  // Reload page after deletion
+								window.location.reload();
 							} else {
 								alert(response.message || "Error deleting cities.");
 							}
@@ -465,6 +477,25 @@ table.table td:last-child{
 			}
 		});
 
+		// Page Size Selector
+		$('#pageSizeSelector').change(function () {
+			var selectedPageSize = $(this).val();
+
+			var currentPage = $('#currentPage').val();
+			var sortingParameter = $('#sortingParameter').val();
+
+			$.ajax({
+				url: '@Url.Action("Index", "City")',
+				type: 'GET',
+				data: { page: currentPage, pageSize: selectedPageSize, sortBy = sortingParameter },
+				success: function (result) {
+					$('#cityTable').html(result);
+				},
+				error: function (xhr, status, error) {
+					console.error("Error loading cities: " + error);
+				}
+			});
+		});
 
 	});
 
