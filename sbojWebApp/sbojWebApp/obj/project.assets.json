@@ -4251,23 +4251,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\nvalc\\.nuget\\packages\\": {},
+    "C:\\Users\\GRIGS\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\nvalc\\source\\repos\\NValchanov09\\sboj.bg\\sbojWebApp\\sbojWebApp\\sbojWebApp.csproj",
+      "projectUniqueName": "C:\\Users\\GRIGS\\Source\\Repos\\NValchanov09\\sboj.bg\\sbojWebApp\\sbojWebApp\\sbojWebApp.csproj",
       "projectName": "sbojWebApp",
-      "projectPath": "C:\\Users\\nvalc\\source\\repos\\NValchanov09\\sboj.bg\\sbojWebApp\\sbojWebApp\\sbojWebApp.csproj",
-      "packagesPath": "C:\\Users\\nvalc\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\nvalc\\source\\repos\\NValchanov09\\sboj.bg\\sbojWebApp\\sbojWebApp\\obj\\",
+      "projectPath": "C:\\Users\\GRIGS\\Source\\Repos\\NValchanov09\\sboj.bg\\sbojWebApp\\sbojWebApp\\sbojWebApp.csproj",
+      "packagesPath": "C:\\Users\\GRIGS\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\GRIGS\\Source\\Repos\\NValchanov09\\sboj.bg\\sbojWebApp\\sbojWebApp\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\nvalc\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\GRIGS\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -4346,7 +4346,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.400/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.401/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

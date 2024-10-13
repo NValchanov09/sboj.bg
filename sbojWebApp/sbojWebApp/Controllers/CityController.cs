@@ -8,6 +8,7 @@ using Newtonsoft.Json;
 using System.IO;
 using System.Linq;
 using System.Globalization;
+using System.Diagnostics;
 
 namespace sbojWebApp.Controllers
 {
@@ -231,7 +232,37 @@ namespace sbojWebApp.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool CityExists(int id)
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public IActionResult DeleteSelectedCities([FromBody] int[] cityIds)
+		{
+			if (cityIds == null)
+			{
+				return Json(new { success = false, message = "cityIds is null." });
+			}
+			if (cityIds.Length == 0)
+			{
+				return Json(new { success = false, message = "No cities selected for deletion." });
+			}
+
+			try
+			{
+				var citiesToDelete = _context.Cities.Where(c => cityIds.Contains(c.Id)).ToList();
+				_context.Cities.RemoveRange(citiesToDelete);
+				_context.SaveChanges();
+
+				return Json(new { success = true });
+			}
+			catch (Exception ex)
+			{
+				return Json(new { success = false, message = "Error deleting cities: " + ex.Message });
+			}
+		}
+
+
+
+
+		private bool CityExists(int id)
         {
             return _context.Cities.Any(e => e.Id == id);
         }
