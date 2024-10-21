@@ -9,6 +9,7 @@ using System.IO;
 using System.Linq;
 using System.Globalization;
 using System.Diagnostics;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace sbojWebApp.Controllers
 {
@@ -88,7 +89,21 @@ namespace sbojWebApp.Controllers
         {
             var cities = _context.Cities.AsQueryable();
 
-            switch(sortBy.ToLower())
+			int itemCount = cities.Count();
+
+            var pageSizeOptions = new List<SelectListItem>
+            {
+                new SelectListItem { Value = "5", Text = "5", Selected = pageSize == 5 },
+                new SelectListItem { Value = "10", Text = "10", Selected = pageSize == 10 },
+                new SelectListItem { Value = "15", Text = "15", Selected = pageSize == 15 },
+                new SelectListItem { Value = "25", Text = "25", Selected = pageSize == 25 },
+                new SelectListItem { Value = "50", Text = "50", Selected = pageSize == 50 },
+                new SelectListItem { Value = "itemCount", Text = "All", Selected = pageSize == itemCount }
+            };
+
+            ViewBag.PageSizes = pageSizeOptions;
+
+            switch (sortBy.ToLower())
             {
                 case "name":
                     cities = cities.OrderBy(c => c.Name);
@@ -107,13 +122,14 @@ namespace sbojWebApp.Controllers
                     break;
             }
 
-            int itemCount = cities.Count();
-
 			if (page <= 0 || page > itemCount)
 				page = 1;
 
             if (pageSize <= 0)
                 pageSize = 10;
+
+            if ((page - 1) * pageSize > itemCount)
+                page = 1;
 
 			int itemsSkipped = (page - 1) * pageSize;
 

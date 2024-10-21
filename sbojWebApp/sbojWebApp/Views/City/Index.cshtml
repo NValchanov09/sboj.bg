@@ -248,16 +248,16 @@ table.table td:last-child{
 <div class="form-group">
     <label for="pageSizeSelector">Cities per page:</label>
     <select id="pageSizeSelector" class="form-control" style="width: auto; display: inline-block;">
-        <option value="5" @(pager.PageSize == 5 ? "selected" : "")>5</option>
-        <option value="10" @(pager.PageSize == 10 ? "selected" : "")>10</option>
-        <option value="20" @(pager.PageSize == 20 ? "selected" : "")>20</option>
-        <option value="50" @(pager.PageSize == 50 ? "selected" : "")>50</option>
-		@(pager.PageSize == 5 ? "selected" : "")
-    </select>
-</div>
+		@foreach(var item in ViewBag.PageSizes)
+		{
+			<option value="@item.Value" selected="@item.Selected">@item.Text</option>
+		}
 
-<input type="hidden" id="currentPage" value="@(pager.CurrentPage)" />
-<input type="hidden" id="sortingParameter" value="@(sorter.SortingParameter)" />
+    </select>
+
+	<input type="hidden" id="currentPage" value="@(pager.CurrentPage)" />
+	<input type="hidden" id="sortingParameter" value="@(sorter.SortingParameter)" />
+</div>
 
 <div class="container-xl">
 	<div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel" aria-hidden="true">
@@ -315,9 +315,9 @@ table.table td:last-child{
 								<label for="selectAll"></label>
 							</span>
 						</th>
-						<th><a asp-controller="City" asp-action="Index" asp-route-page="@(pager.CurrentPage)" asp-route-sortBy="name" title="Sort By Name">@Html.DisplayNameFor(model => model.Name)</a></th>
-						<th><a asp-controller="City" asp-action="Index" asp-route-page="@(pager.CurrentPage)" asp-route-sortBy="latitude" title="Sort By Latitude">@Html.DisplayNameFor(model => model.Latitude)</a></th>
-						<th><a asp-controller="City" asp-action="Index" asp-route-page="@(pager.CurrentPage)" asp-route-sortBy="longitude" title="Sort By Longitude">@Html.DisplayNameFor(model => model.Longitude)</a></th>
+						<th><a asp-controller="City" asp-action="Index" asp-route-page="@(pager.CurrentPage)" asp-route-pageSize="@(pager.PageSize)" asp-route-sortBy="name" title="Sort By Name">@Html.DisplayNameFor(model => model.Name)</a></th>
+						<th><a asp-controller="City" asp-action="Index" asp-route-page="@(pager.CurrentPage)" asp-route-pageSize="@(pager.PageSize)" asp-route-sortBy="latitude" title="Sort By Latitude">@Html.DisplayNameFor(model => model.Latitude)</a></th>
+						<th><a asp-controller="City" asp-action="Index" asp-route-page="@(pager.CurrentPage)" asp-route-pageSize="@(pager.PageSize)" asp-route-sortBy="longitude" title="Sort By Longitude">@Html.DisplayNameFor(model => model.Longitude)</a></th>
 						<th>Actions</th>
 					</tr>
 				</thead>
@@ -352,25 +352,25 @@ table.table td:last-child{
                         @if (pager.CurrentPage > 1)
                         {
                             <li class="page-item">
-								<a class="page-link" asp-controller="City" asp-action="Index" asp-route-page="1" asp-route-sortBy="@(sorter.SortingParameter)">First</a>
+								<a class="page-link" asp-controller="City" asp-action="Index" asp-route-page="1" asp-route-pageSize="@(pager.PageSize)" asp-route-sortBy="@(sorter.SortingParameter)">First</a>
                             </li>
                             <li class="page-item">
-								<a class="page-link" asp-controller="City" asp-action="Index" asp-route-page="@(pager.CurrentPage - 1)" asp-route-sortBy="@(sorter.SortingParameter)">Previous</a>
+								<a class="page-link" asp-controller="City" asp-action="Index" asp-route-page="@(pager.CurrentPage - 1)" asp-route-pageSize="@(pager.PageSize)" asp-route-sortBy="@(sorter.SortingParameter)">Previous</a>
                             </li>
                         }
                         @for (var pg = pager.StartPage; pg <= pager.EndPage; pg++)
                         {
                             <li class="page-item @(pg == pager.CurrentPage ? "active" : "")">
-								<a class="page-link" asp-controller="City" asp-action="Index" asp-route-page="@pg" asp-route-sortBy="@(sorter.SortingParameter)"> @pg </a>
+								<a class="page-link" asp-controller="City" asp-action="Index" asp-route-page="@pg" asp-route-pageSize="@(pager.PageSize)" asp-route-sortBy="@(sorter.SortingParameter)"> @pg </a>
                             </li>
                         }
                         @if (pager.CurrentPage < pager.TotalPages)
                         {
                             <li class="page-item">
-								<a class="page-link" asp-controller="City" asp-action="Index" asp-route-page="@(pager.CurrentPage + 1)" asp-route-sortBy="@(sorter.SortingParameter)">Next</a>
+								<a class="page-link" asp-controller="City" asp-action="Index" asp-route-page="@(pager.CurrentPage + 1)" asp-route-pageSize="@(pager.PageSize)" asp-route-sortBy="@(sorter.SortingParameter)">Next</a>
                             </li>
                             <li class="page-item">
-								<a class="page-link" asp-controller="City" asp-action="Index" asp-route-page="@(pager.TotalPages)" asp-route-sortBy="@(sorter.SortingParameter)">Last</a>
+								<a class="page-link" asp-controller="City" asp-action="Index" asp-route-page="@(pager.TotalPages)" asp-route-pageSize="@(pager.PageSize)" asp-route-sortBy="@(sorter.SortingParameter)">Last</a>
                             </li>
                         }
                     </ul>
@@ -484,19 +484,40 @@ table.table td:last-child{
 			var currentPage = $('#currentPage').val();
 			var sortingParameter = $('#sortingParameter').val();
 
+			var url = new URL(window.location.href);
+			var params = url.searchParams;
+
+			params.set('page', currentPage);
+			params.set('pageSize', selectedPageSize);
+			params.set('sortBy', sortingParameter);
+
+			url.search = params.toString();
+
+			window.location.href = url.toString();
+			/*
+
+			console.log("daima")
+
+			var selectedPageSize = $(this).val();
+
+			var currentPage = $('#currentPage').val();
+			var sortingParameter = $('#sortingParameter').val();
+
 			$.ajax({
 				url: '@Url.Action("Index", "City")',
 				type: 'GET',
-				data: { page: currentPage, pageSize: selectedPageSize, sortBy = sortingParameter },
+				data: { page: currentPage, pageSize: selectedPageSize, sortBy: sortingParameter },
 				success: function (result) {
-					$('#cityTable').html(result);
+					$('body').html(result);
 				},
 				error: function (xhr, status, error) {
 					console.error("Error loading cities: " + error);
 				}
 			});
+			*/
 		});
-
 	});
+
+	
 
 </script>
