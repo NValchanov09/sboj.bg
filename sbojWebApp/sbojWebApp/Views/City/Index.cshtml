@@ -45,10 +45,8 @@
 	margin: 7px 0 0;
 	font-size: 38px;
 }
-.table-title .btn-group {
-	float: right;
-}
-.table-title .btn {
+
+.table-title .btn, .form-group{
 	float: right;
 	font-size: 19px;
 	min-width: 50px;
@@ -56,11 +54,12 @@
 	margin: 0 10px;
 }
 
-@@media (max-width: 576px) {
-    .table-title .btn {
-        float: none;
-		margin-top: 30px;
-    }
+.table-title .form-group{
+	margin: 0px;
+	font-size: 22px;
+	margin-left: -400px;
+	margin-right: 45px;
+	margin-top: 8px;
 }
 
 .table-title .btn i {
@@ -73,6 +72,30 @@
 .table-title .btn span {
 	float: left;
 	margin-top: 5px;
+}
+
+.table-title .form-group select{
+	text-align-last: center;
+}
+
+@@media (max-width: 1000px) {
+    .table-title .btn, .table-title .form-group{
+		float:left;
+		margin: 0px;
+	}
+
+	.table-title .button-group{
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		width: auto;
+	}
+
+	.table-title .btn,
+	.table-title .form-group
+	{
+		margin-top: 20px;
+	}
 }
 
 /* Table */
@@ -245,19 +268,6 @@ table.table td:last-child{
 }
 
 </style>
-<div class="form-group">
-    <label for="pageSizeSelector">Cities per page:</label>
-    <select id="pageSizeSelector" class="form-control" style="width: auto; display: inline-block;">
-		@foreach(var item in ViewBag.PageSizes)
-		{
-			<option value="@item.Value" selected="@item.Selected">@item.Text</option>
-		}
-
-    </select>
-
-	<input type="hidden" id="currentPage" value="@(pager.CurrentPage)" />
-	<input type="hidden" id="sortingParameter" value="@(sorter.SortingParameter)" />
-</div>
 
 <div class="container-xl">
 	<div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel" aria-hidden="true">
@@ -290,20 +300,38 @@ table.table td:last-child{
 						<h2>Manage <b>Cities</b></h2>
 					</div>
 					<div class="col-sm-6">
+						<div class="button-group">
+							<a id="deleteSelectedCities" class="btn btn-danger">
+								<i class="material-icons">&#xE872;</i>
+								<span>Delete Selected Cities</span>
+							</a>
 
-						<a id="deleteSelectedCities" class="btn btn-danger">
-							<i class="material-icons">&#xE872;</i>
-							<span>Delete Selected Cities</span>
-						</a>
+							<a asp-action="Create" class="btn btn-success">
+								<i class="material-icons">&#xE147;</i>
+								<span>Add New City</span>
+							</a>
+						</div>
+						<div class="form-group">
+							<label for="pageSizeSelector">
+								Cities per page
+							</label>
 
-                        <a asp-action="Create" class="btn btn-success" >
-							<i class="material-icons">&#xE147;</i> 
-							<span>Add New City</span>
-						</a>
+							<select id="pageSizeSelector" class="form-control form-select-sm" style="width: auto; display: inline-block;">
+								@foreach (var item in ViewBag.PageSizes)
+								{
+									<option value="@item.Value" selected="@item.Selected">@item.Text</option>
+								}
 
+							</select>
+
+							<input type="hidden" id="currentPage" value="@(pager.CurrentPage)" />
+							<input type="hidden" id="sortingParameter" value="@(sorter.SortingParameter)" />
+						</div>
 					</div>
 				</div>
 			</div>
+
+
 
 			<table class="table table-striped table-hover">
 

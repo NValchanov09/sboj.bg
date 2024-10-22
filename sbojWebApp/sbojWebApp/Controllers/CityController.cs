@@ -84,12 +84,12 @@ namespace sbojWebApp.Controllers
             return Content($"Deleted everything from the table");
         }
 
-		// GET: City
-		public IActionResult Index(int page = 1, int pageSize = 10, string sortBy = "id")
+        // GET: City
+        public IActionResult Index(int page = 1, int pageSize = 10, string sortBy = "id")
         {
             var cities = _context.Cities.AsQueryable();
 
-			int itemCount = cities.Count();
+            int itemCount = cities.Count();
 
             var pageSizeOptions = new List<SelectListItem>
             {
@@ -98,7 +98,7 @@ namespace sbojWebApp.Controllers
                 new SelectListItem { Value = "15", Text = "15", Selected = pageSize == 15 },
                 new SelectListItem { Value = "25", Text = "25", Selected = pageSize == 25 },
                 new SelectListItem { Value = "50", Text = "50", Selected = pageSize == 50 },
-                new SelectListItem { Value = "itemCount", Text = "All", Selected = pageSize == itemCount }
+                new SelectListItem { Value = $"{itemCount}", Text = "All", Selected = pageSize == itemCount }
             };
 
             ViewBag.PageSizes = pageSizeOptions;
@@ -122,11 +122,14 @@ namespace sbojWebApp.Controllers
                     break;
             }
 
-			if (page <= 0 || page > itemCount)
-				page = 1;
+            if (page <= 0 || page > itemCount)
+                page = 1;
 
             if (pageSize <= 0)
                 pageSize = 10;
+
+            if (pageSize > itemCount)
+                pageSize = itemCount;
 
             if ((page - 1) * pageSize > itemCount)
                 page = 1;
