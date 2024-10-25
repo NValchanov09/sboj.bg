@@ -371,7 +371,7 @@ table.table td:last-child{
 								</span>
 							</td>
                             <td>@Html.DisplayFor(modelItem => item.Name)</td>
-							<td>@Html.DisplayFor(modelItem => item.ImageURL)</td>
+							<td><img src="@Html.DisplayFor(modelItem => item.ImageURL)" style="width: 100px; height: auto;"/></td>
 							<td>@Html.DisplayFor(modelItem => item.Website)</td>
 							<td>@Html.DisplayFor(modelItem => item.PhoneNumber)</td>
 						    <td>
