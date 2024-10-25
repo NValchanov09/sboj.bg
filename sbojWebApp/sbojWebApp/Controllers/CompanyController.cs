@@ -85,6 +85,9 @@ namespace sbojWebApp.Controllers
 
 			int itemCount = companies.Count();
 
+			Console.Write("THE CURRENT ITEM COUNT IS : ");
+			Console.WriteLine(itemCount);
+
 			var pageSizeOptions = new List<SelectListItem>
 			{
 				new SelectListItem { Value = "5", Text = "5", Selected = pageSize == 5 },
@@ -122,7 +125,7 @@ namespace sbojWebApp.Controllers
 			if (pageSize <= 0)
 				pageSize = 10;
 
-			if (pageSize > itemCount)
+			if (pageSize > itemCount && itemCount > 0)
 				pageSize = itemCount;
 
 			if ((page - 1) * pageSize > itemCount)

@@ -9,7 +9,7 @@ namespace sbojWebApp.Models
         public string? FirstName { get; set; }
         public string? LastName { get; set; }
 
-        public string? ProfileImagePath { get; set; }
+        public string? ProfileImageURL { get; set; }
         public DateTime CreationDate { get; set; } = DateTime.Now;
 
         [ForeignKey("City")]

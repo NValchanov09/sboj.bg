@@ -128,7 +128,7 @@ namespace sbojWebApp.Controllers
             if (pageSize <= 0)
                 pageSize = 10;
 
-            if (pageSize > itemCount)
+            if (pageSize > itemCount && itemCount > 0)
                 pageSize = itemCount;
 
             if ((page - 1) * pageSize > itemCount)

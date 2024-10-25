@@ -306,7 +306,7 @@ table.table td:last-child{
 			<div class="table-title">
 				<div class="row">
 					<div class="col-sm-6">
-						<h2>Manage <b>Cities</b></h2>
+                        <h2>Manage <b>Companies</b></h2>
 					</div>
 					<div class="col-sm-6">
 						<div class="button-group">
@@ -322,7 +322,7 @@ table.table td:last-child{
 						</div>
 						<div class="form-group">
 							<label for="pageSizeSelector">
-								Companies per page
+								Page Size
 							</label>
 
 							<select id="pageSizeSelector" class="form-control form-select-sm" style="width: auto; display: inline-block;">
@@ -353,9 +353,9 @@ table.table td:last-child{
 							</span>
 						</th>
 						<th><a asp-controller="Company" asp-action="Index" asp-route-page="@(pager.CurrentPage)" asp-route-pageSize="@(pager.PageSize)" asp-route-sortBy="name" title="Sort By Name">@Html.DisplayNameFor(model => model.Name)</a></th>
-						<th><a>@Html.DisplayNameFor(model => model.Name)</a></th>
-						<th><a asp-controller="Company" asp-action="Index" asp-route-page="@(pager.CurrentPage)" asp-route-pageSize="@(pager.PageSize)" asp-route-sortBy="latitude" title="Sort By Latitude">@Html.DisplayNameFor(model => model.Website)</a></th>
-						<th><a asp-controller="Company" asp-action="Index" asp-route-page="@(pager.CurrentPage)" asp-route-pageSize="@(pager.PageSize)" asp-route-sortBy="longitude" title="Sort By Longitude">@Html.DisplayNameFor(model => model.PhoneNumber)</a></th>
+						<th><a>Image</a></th>
+						<th><a asp-controller="Company" asp-action="Index" asp-route-page="@(pager.CurrentPage)" asp-route-pageSize="@(pager.PageSize)" asp-route-sortBy="website" title="Sort By Website">@Html.DisplayNameFor(model => model.Website)</a></th>
+						<th><a asp-controller="Company" asp-action="Index" asp-route-page="@(pager.CurrentPage)" asp-route-pageSize="@(pager.PageSize)" asp-route-sortBy="phonenumber" title="Sort By Phone Number">@Html.DisplayNameFor(model => model.PhoneNumber)</a></th>
 						<th>Actions</th>
 					</tr>
 				</thead>
@@ -371,8 +371,9 @@ table.table td:last-child{
 								</span>
 							</td>
                             <td>@Html.DisplayFor(modelItem => item.Name)</td>
-                            <td class="number-cell">@Html.DisplayFor(modelItem => item.Latitude)</td>
-                            <td class="number-cell">@Html.DisplayFor(modelItem => item.Longitude)</td>
+							<td>@Html.DisplayFor(modelItem => item.ImageURL)</td>
+							<td>@Html.DisplayFor(modelItem => item.Website)</td>
+							<td>@Html.DisplayFor(modelItem => item.PhoneNumber)</td>
 						    <td>
                                 <a class="edit" asp-action="Edit" asp-route-id="@item.Id"><i class="material-icons" title="Edit">&#xE254;</i></a>
                                 <a class="details" asp-action="Details" asp-route-id="@item.Id"><i class="material-icons" title="Details">&#xe241;</i></a>
@@ -390,25 +391,25 @@ table.table td:last-child{
                         @if (pager.CurrentPage > 1)
                         {
                             <li class="page-item">
-								<a class="page-link" asp-controller="City" asp-action="Index" asp-route-page="1" asp-route-pageSize="@(pager.PageSize)" asp-route-sortBy="@(sorter.SortingParameter)">First</a>
+								<a class="page-link" asp-controller="Company" asp-action="Index" asp-route-page="1" asp-route-pageSize="@(pager.PageSize)" asp-route-sortBy="@(sorter.SortingParameter)">First</a>
                             </li>
                             <li class="page-item">
-								<a class="page-link" asp-controller="City" asp-action="Index" asp-route-page="@(pager.CurrentPage - 1)" asp-route-pageSize="@(pager.PageSize)" asp-route-sortBy="@(sorter.SortingParameter)">Previous</a>
+								<a class="page-link" asp-controller="Company" asp-action="Index" asp-route-page="@(pager.CurrentPage - 1)" asp-route-pageSize="@(pager.PageSize)" asp-route-sortBy="@(sorter.SortingParameter)">Previous</a>
                             </li>
                         }
                         @for (var pg = pager.StartPage; pg <= pager.EndPage; pg++)
                         {
                             <li class="page-item @(pg == pager.CurrentPage ? "active" : "")">
-								<a class="page-link" asp-controller="City" asp-action="Index" asp-route-page="@pg" asp-route-pageSize="@(pager.PageSize)" asp-route-sortBy="@(sorter.SortingParameter)"> @pg </a>
+								<a class="page-link" asp-controller="Company" asp-action="Index" asp-route-page="@pg" asp-route-pageSize="@(pager.PageSize)" asp-route-sortBy="@(sorter.SortingParameter)"> @pg </a>
                             </li>
                         }
                         @if (pager.CurrentPage < pager.TotalPages)
                         {
                             <li class="page-item">
-								<a class="page-link" asp-controller="City" asp-action="Index" asp-route-page="@(pager.CurrentPage + 1)" asp-route-pageSize="@(pager.PageSize)" asp-route-sortBy="@(sorter.SortingParameter)">Next</a>
+								<a class="page-link" asp-controller="Company" asp-action="Index" asp-route-page="@(pager.CurrentPage + 1)" asp-route-pageSize="@(pager.PageSize)" asp-route-sortBy="@(sorter.SortingParameter)">Next</a>
                             </li>
                             <li class="page-item">
-								<a class="page-link" asp-controller="City" asp-action="Index" asp-route-page="@(pager.TotalPages)" asp-route-pageSize="@(pager.PageSize)" asp-route-sortBy="@(sorter.SortingParameter)">Last</a>
+								<a class="page-link" asp-controller="Company" asp-action="Index" asp-route-page="@(pager.TotalPages)" asp-route-pageSize="@(pager.PageSize)" asp-route-sortBy="@(sorter.SortingParameter)">Last</a>
                             </li>
                         }
                     </ul>
@@ -419,29 +420,14 @@ table.table td:last-child{
 </div>
 <ul>
 	<li>
-		<a href="@Url.Action("ExportDataToJson", "City")">Export Data to JSON</a>
+		<a href="@Url.Action("ExportDataToJson", "Company")">Export Data to JSON</a>
 	</li>
 	<li>
-		<a href="@Url.Action("DeleteAll", "City")">Delete Everything</a>
+		<a href="@Url.Action("DeleteAll", "Company")">Delete Everything</a>
 	</li>
 </ul>
 
 <script>
-
-	document.addEventListener("DOMContentLoaded", function () {
-
-		const numberCells = document.querySelectorAll(".number-cell");
-		const fixedDigits = 4;
-
-		numberCells.forEach(function (cell) {
-			const cellText = cell.textContent.trim();
-			const cellValue = parseFloat(cellText);
-
-			if (!isNaN(cellValue)) {
-				cell.textContent = cellValue.toFixed(fixedDigits);
-			}
-		});
-	});
 
 	$(document).ready(function () {
 		$('[data-toggle="tooltip"]').tooltip();
@@ -464,12 +450,12 @@ table.table td:last-child{
 			}
 		});
 
-		$("#deleteSelectedCities").click(function () {
-			var selectedCities = [];
+		$("#deleteSelectedCompanies").click(function () {
+			var selectedCompanies = [];
 
-			// Collect all selected cities
+			// Collect all selected companies
 			$('table tbody input[name="checkbox"]:checked').each(function () {
-				selectedCities.push($(this).val());
+				selectedCompanies.push($(this).val());
 			});
 
 			$('.cancelDelete').click(function () {
@@ -482,16 +468,16 @@ table.table td:last-child{
 				}
 			});
 
-			if (selectedCities.length > 0) {
+			if (selectedCompanies.length > 0) {
 				$('#confirmModal').modal('show');
 
 				// Handle confirm delete
 				$('#confirmDelete').click(function () {
 					$.ajax({
-						url: '@Url.Action("DeleteSelectedCities", "City")',
+						url: '@Url.Action("DeleteSelectedCompanies", "Company")',
 						type: 'POST',
 						contentType: 'application/json; charset=utf-8',
-						data: JSON.stringify(selectedCities),
+						data: JSON.stringify(selectedCompanies),
 						headers: {
 							'RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val()
 						},
@@ -499,7 +485,7 @@ table.table td:last-child{
 							if (response.success) {
 								window.location.reload();
 							} else {
-								alert(response.message || "Error deleting cities.");
+								alert(response.message || "Error deleting companies.");
 							}
 						},
 						error: function (xhr, status, error) {
@@ -511,7 +497,7 @@ table.table td:last-child{
 					$('#confirmModal').modal('hide');
 				});
 			} else {
-				alert("Please select at least one city to delete.");
+				alert("Please select at least one company to delete.");
 			}
 		});
 
@@ -532,27 +518,6 @@ table.table td:last-child{
 			url.search = params.toString();
 
 			window.location.href = url.toString();
-			/*
-
-			console.log("daima")
-
-			var selectedPageSize = $(this).val();
-
-			var currentPage = $('#currentPage').val();
-			var sortingParameter = $('#sortingParameter').val();
-
-			$.ajax({
-				url: '@Url.Action("Index", "City")',
-				type: 'GET',
-				data: { page: currentPage, pageSize: selectedPageSize, sortBy: sortingParameter },
-				success: function (result) {
-					$('body').html(result);
-				},
-				error: function (xhr, status, error) {
-					console.error("Error loading cities: " + error);
-				}
-			});
-			*/
 		});
 	});
 

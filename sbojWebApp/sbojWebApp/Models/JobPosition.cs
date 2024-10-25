@@ -28,7 +28,6 @@ namespace sbojWebApp.Models
         public int? VacationDaysHigh { get; set; }
 
         public ICollection<Language> RequiredLanguages { get; set; } = new List<Language>();
-        public ICollection<JobApplication> Applications { get; set; } = new List<JobApplication>();
 
         [ForeignKey("City")]
         public int? CityId { get; set; }
