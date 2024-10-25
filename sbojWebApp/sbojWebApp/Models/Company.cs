@@ -5,25 +5,30 @@ namespace sbojWebApp.Models
     public class Company
     {
         public int Id { get; set; }
-        public string? Name { get; set; }
-        public string? Description { get; set; }
-        public string? ImageURL { get; set; }
+		[Required]
+		[StringLength(30, ErrorMessage = "The maximum length for the name is 30 characters.")]
+		public string? Name { get; set; }
+		[Required]
+		[StringLength(200, ErrorMessage = "The maximum length for the description is 200 characters.")]
+		public string? Description { get; set; }
+		[Required]
+		public string? ImageURL { get; set; }
 
         [Url(ErrorMessage = "Please enter a valid Website URL")]
-		[MaxLength(100)]
+		[StringLength(100, ErrorMessage = "The maximum length for the Website URL is 100 characters.")]
 		public string? Website { get; set; }
         [Url(ErrorMessage = "Please enter a valid LinkedIn URL")]
-		[MaxLength(100)]
+		[StringLength(100, ErrorMessage = "The maximum length for the Linkedin URL is 100 characters.")]
 		public string? LinkedIn { get; set; }
         [Url(ErrorMessage = "Please enter a valid Facebook URL")]
-		[MaxLength(100)]
+		[StringLength(100, ErrorMessage = "The maximum length for the Facebook URL is 100 characters.")]
 		public string? Facebook { get; set; }
         [Url(ErrorMessage = "Please enter a valid Instagram URL")]
-		[MaxLength(100)]
+		[StringLength(100, ErrorMessage = "The maximum length for the Instagram URL is 100 characters.")]
 		public string? Instagram { get; set; }
         [Phone(ErrorMessage = "Please enter a valid phone number")]
-        [MaxLength(20)]
-        public string? PhoneNumber { get; set; }
+		[StringLength(20, ErrorMessage = "The maximum length for the Phone Number is 20 characters.")]
+		public string? PhoneNumber { get; set; }
 
     }
 

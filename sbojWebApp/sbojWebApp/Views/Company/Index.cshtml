@@ -1,6 +1,561 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model IEnumerable<sbojWebApp.Models.Company>
+@Html.AntiForgeryToken()
+
 @{
+	ViewData["Title"] = "Index";
+
+	Pager pager = new Pager();
+
+	if(ViewBag.Pager != null)
+	{
+		pager = ViewBag.Pager;
+	}
+
+	Sorter sorter = new Sorter();
+
+	if(ViewBag.Sorter != null)
+	{
+		sorter = ViewBag.Sorter;
+	}
 }
-<h1>Companies Main Page</h1>
+
+<style>
+
+/* Table header and buttons */
+
+.table-responsive {
+	margin: 40px 0;
+}
+.table-wrapper {
+	background: #fff;
+	padding: 20px 25px;
+	border-radius: 6px;
+	min-width: 1000px;
+	box-shadow: 0 1px 1px rgba(0,0,0,.05);
+}
+.table-title {
+	padding-bottom: 15px;
+	background: #435d7d;
+	color: #fff;
+	padding: 20px 30px;
+	margin: -20px -25px 10px;
+	border-radius: 6px 6px 0 0;
+}
+.table-title h2 {
+	margin: 7px 0 0;
+	font-size: 38px;
+}
+
+.table-title .btn, .form-group{
+	float: right;
+	font-size: 19px;
+	min-width: 50px;
+	border-radius: 5px;
+	margin: 0 10px;
+}
+
+.table-title .form-group{
+	margin: 0px;
+	font-size: 22px;
+	margin-left: -400px;
+	margin-right: 45px;
+	margin-top: 8px;
+}
+
+.table-title .btn i {
+	float: left;
+	font-size: 27px;
+	margin-right: 5px;
+	margin-top: 5px;
+}
+
+.table-title .btn span {
+	float: left;
+	margin-top: 5px;
+}
+
+.table-title .form-group select{
+	font-size: 18px;
+	border-radius: 5px;
+	border-color: #c4c4c4;
+	border-width: 3px;
+	width: auto;
+}
+
+.table-title .form-group option{
+	font-size: 18px;
+	text-align-last: center;
+}
+
+@@media (max-width: 1000px) {
+    .table-title .btn, .table-title .form-group{
+		float:left;
+		margin: 0px;
+	}
+
+	.table-title .button-group{
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		width: auto;
+	}
+
+	.table-title .btn,
+	.table-title .form-group
+	{
+		margin-top: 20px;
+	}
+}
+
+/* Table */
+
+table.table tr th, table.table tr td {
+	border-color: #d9d9d9;
+	padding: 12px 15px;
+	vertical-align: middle;
+	border-top-width: 2px;
+	border-bottom-width: 2px;
+}
+
+table.table tr th{
+	border-top-width: 0px;
+	padding-top: 20px;
+	padding-bottom: 20px;
+}
+
+table.table-striped tbody tr:nth-of-type(odd) {
+	background-color: #fcfcfc;
+}
+table.table-striped.table-hover tbody tr:hover {
+	background: #f5f5f5;
+}
+table.table td:last-child i {
+	font-size: 33px;
+	margin-top: 8px;
+	margin-right: 15px;
+}
+
+table.table td a {
+	font-weight: bold;
+	color: #566787;
+	text-decoration: none;
+	outline: none !important;
+}
+table.table td a.edit {
+	color: #FFC107;
+}
+table.table td a.delete {
+	color: #F44336;
+}
+table.table td a.details {
+	color: #404040;
+}
+
+table.table th{
+	font-size: 20px;
+}
+
+table.table th a{
+	text-decoration: none;
+	color: inherit;
+}
+
+table.table td{
+	font-size: 18px;
+}
+
+table.table td:first-child{
+	padding-left: 25px;
+}
+
+table.table th:first-child{
+	padding-left: 25px;
+}
+
+table.table td:last-child, th:last-child {
+	text-align: center;
+}
+
+table.table th:last-child{
+	padding-left:0px;
+}
+
+table.table td:last-child{
+	border-left-width: 2px;
+}
+
+/* Pagination */
+
+.pagination {
+	float: right;
+	margin: 0 0 5px;
+}
+.pagination li a {
+	border: 1px solid transparent;
+	font-size: 13px;
+	min-width: 30px;
+	min-height: 30px;
+	color: #999;
+	margin: 0 3px;
+	line-height: 30px;
+	border-radius: 2px;
+	text-align: center;
+	padding: 0 6px;
+}
+.pagination li a:hover{
+	color: #666;
+	border: 1px solid rgba(0, 0, 0, 0.2);
+}
+.pagination li.active a, .pagination li.active a.page-link {
+	background: #03A9F4;
+	border: 1px solid transparent;
+}
+.pagination li.active a:hover {
+	background: #0397d6;
+	border: 1px solid transparent;
+}
+.hint-text {
+	float: left;
+	margin-top: 9px;
+	margin-left: 10px;
+	font-size: 15px;
+	opacity: 0.7;
+}
+
+/* Checkboxes */
+
+.custom-checkbox {
+	position: relative;
+}
+.custom-checkbox input[type="checkbox"] {  
+	opacity: 0;
+	width: 30px;
+	height: 30px;
+	position: absolute;
+	z-index: 9;
+}
+.custom-checkbox label:before{
+	width: 30px;
+	height: 30px;
+}
+.custom-checkbox label:before {
+	content: '';
+	margin-right: 10px;
+	display: inline-block;
+	vertical-align: text-top;
+	background: white;
+	border: 2px solid #bbb;
+	border-radius: 2px;
+	box-sizing: border-box;
+	z-index: 2;
+}
+.custom-checkbox input[type="checkbox"]:checked + label:after {
+	content: '';
+	position: absolute;
+	left: 10px;
+	top: 4px;
+	width: 10px;
+	height: 18px;
+	border: 2px solid black;
+	border-width: 0 3px 3px 0;
+	transform: inherit;
+	z-index: 3;
+	transform: rotateZ(45deg);
+}
+.custom-checkbox input[type="checkbox"]:checked + label:before {
+	border-color: #03A9F4;
+	background: #03A9F4;
+}
+.custom-checkbox input[type="checkbox"]:checked + label:after {
+	border-color: #fff;
+}
+.custom-checkbox input[type="checkbox"]:disabled + label:before {
+	color: #b8b8b8;
+	cursor: auto;
+	box-shadow: none;
+	background: #ddd;
+}
+
+</style>
+
+<div class="container-xl">
+	<div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title" id="confirmModalLabel">Confirm Deletion</h4>
+					<button type="button" class="close cancelDelete" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					Are you sure you want to delete the selected companies?
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-danger" id="confirmDelete">Delete</button>
+					<button type="button" class="btn btn-secondary cancelDelete" id="cancelDelete">Cancel</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+	<div class="table-responsive">
+		<div class="table-wrapper">
+			<div class="table-title">
+				<div class="row">
+					<div class="col-sm-6">
+						<h2>Manage <b>Cities</b></h2>
+					</div>
+					<div class="col-sm-6">
+						<div class="button-group">
+							<a id="deleteSelectedCompanies" class="btn btn-danger">
+								<i class="material-icons">&#xE872;</i>
+								<span>Delete Selected Companies</span>
+							</a>
+
+							<a asp-action="Create" class="btn btn-success">
+								<i class="material-icons">&#xE147;</i>
+								<span>Add New Company</span>
+							</a>
+						</div>
+						<div class="form-group">
+							<label for="pageSizeSelector">
+								Companies per page
+							</label>
+
+							<select id="pageSizeSelector" class="form-control form-select-sm" style="width: auto; display: inline-block;">
+								@foreach (var item in ViewBag.PageSizes)
+								{
+									<option value="@item.Value" selected="@item.Selected">@item.Text</option>
+								}
+
+							</select>
+
+							<input type="hidden" id="currentPage" value="@(pager.CurrentPage)" />
+							<input type="hidden" id="sortingParameter" value="@(sorter.SortingParameter)" />
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+
+			<table class="table table-striped table-hover">
+
+				<thead>
+					<tr>
+						<th>
+							<span class="custom-checkbox">
+								<input type="checkbox" id="selectAll" name="selectAll">
+								<label for="selectAll"></label>
+							</span>
+						</th>
+						<th><a asp-controller="Company" asp-action="Index" asp-route-page="@(pager.CurrentPage)" asp-route-pageSize="@(pager.PageSize)" asp-route-sortBy="name" title="Sort By Name">@Html.DisplayNameFor(model => model.Name)</a></th>
+						<th><a>@Html.DisplayNameFor(model => model.Name)</a></th>
+						<th><a asp-controller="Company" asp-action="Index" asp-route-page="@(pager.CurrentPage)" asp-route-pageSize="@(pager.PageSize)" asp-route-sortBy="latitude" title="Sort By Latitude">@Html.DisplayNameFor(model => model.Website)</a></th>
+						<th><a asp-controller="Company" asp-action="Index" asp-route-page="@(pager.CurrentPage)" asp-route-pageSize="@(pager.PageSize)" asp-route-sortBy="longitude" title="Sort By Longitude">@Html.DisplayNameFor(model => model.PhoneNumber)</a></th>
+						<th>Actions</th>
+					</tr>
+				</thead>
+
+				<tbody>
+                    @foreach (var item in Model)
+                    {
+					    <tr>
+							<td>
+								<span class="custom-checkbox">
+									<input type="checkbox" id="checkbox-@item.Id" name="checkbox" value="@item.Id">
+									<label for="checkbox-@item.Id"></label>
+								</span>
+							</td>
+                            <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                            <td class="number-cell">@Html.DisplayFor(modelItem => item.Latitude)</td>
+                            <td class="number-cell">@Html.DisplayFor(modelItem => item.Longitude)</td>
+						    <td>
+                                <a class="edit" asp-action="Edit" asp-route-id="@item.Id"><i class="material-icons" title="Edit">&#xE254;</i></a>
+                                <a class="details" asp-action="Details" asp-route-id="@item.Id"><i class="material-icons" title="Details">&#xe241;</i></a>
+                                <a class="delete" asp-action="Delete" asp-route-id="@item.Id"><i class="material-icons" title="Delete">&#xE872;</i></a>
+						    </td>
+					    </tr>
+                    }
+				</tbody>
+			</table>
+            <div class="clearfix">
+                <div class="hint-text">Showing items from <b>@pager.StartItemsShowing</b> to <b>@pager.EndItemsShowing</b> </div>
+                @if (pager.TotalPages > 0)
+                {
+                    <ul class="pagination">
+                        @if (pager.CurrentPage > 1)
+                        {
+                            <li class="page-item">
+								<a class="page-link" asp-controller="City" asp-action="Index" asp-route-page="1" asp-route-pageSize="@(pager.PageSize)" asp-route-sortBy="@(sorter.SortingParameter)">First</a>
+                            </li>
+                            <li class="page-item">
+								<a class="page-link" asp-controller="City" asp-action="Index" asp-route-page="@(pager.CurrentPage - 1)" asp-route-pageSize="@(pager.PageSize)" asp-route-sortBy="@(sorter.SortingParameter)">Previous</a>
+                            </li>
+                        }
+                        @for (var pg = pager.StartPage; pg <= pager.EndPage; pg++)
+                        {
+                            <li class="page-item @(pg == pager.CurrentPage ? "active" : "")">
+								<a class="page-link" asp-controller="City" asp-action="Index" asp-route-page="@pg" asp-route-pageSize="@(pager.PageSize)" asp-route-sortBy="@(sorter.SortingParameter)"> @pg </a>
+                            </li>
+                        }
+                        @if (pager.CurrentPage < pager.TotalPages)
+                        {
+                            <li class="page-item">
+								<a class="page-link" asp-controller="City" asp-action="Index" asp-route-page="@(pager.CurrentPage + 1)" asp-route-pageSize="@(pager.PageSize)" asp-route-sortBy="@(sorter.SortingParameter)">Next</a>
+                            </li>
+                            <li class="page-item">
+								<a class="page-link" asp-controller="City" asp-action="Index" asp-route-page="@(pager.TotalPages)" asp-route-pageSize="@(pager.PageSize)" asp-route-sortBy="@(sorter.SortingParameter)">Last</a>
+                            </li>
+                        }
+                    </ul>
+                }
+            </div>
+		</div>
+	</div>
+</div>
+<ul>
+	<li>
+		<a href="@Url.Action("ExportDataToJson", "City")">Export Data to JSON</a>
+	</li>
+	<li>
+		<a href="@Url.Action("DeleteAll", "City")">Delete Everything</a>
+	</li>
+</ul>
+
+<script>
+
+	document.addEventListener("DOMContentLoaded", function () {
+
+		const numberCells = document.querySelectorAll(".number-cell");
+		const fixedDigits = 4;
+
+		numberCells.forEach(function (cell) {
+			const cellText = cell.textContent.trim();
+			const cellValue = parseFloat(cellText);
+
+			if (!isNaN(cellValue)) {
+				cell.textContent = cellValue.toFixed(fixedDigits);
+			}
+		});
+	});
+
+	$(document).ready(function () {
+		$('[data-toggle="tooltip"]').tooltip();
+
+		var checkbox = $('table tbody input[type="checkbox"]');
+		$("#selectAll").click(function () {
+			if (this.checked) {
+				checkbox.each(function () {
+					this.checked = true;
+				});
+			} else {
+				checkbox.each(function () {
+					this.checked = false;
+				});
+			}
+		});
+		checkbox.click(function () {
+			if (!this.checked) {
+				$("#selectAll").prop("checked", false);
+			}
+		});
+
+		$("#deleteSelectedCities").click(function () {
+			var selectedCities = [];
+
+			// Collect all selected cities
+			$('table tbody input[name="checkbox"]:checked').each(function () {
+				selectedCities.push($(this).val());
+			});
+
+			$('.cancelDelete').click(function () {
+				$('#confirmModal').modal('hide');
+			});
+
+			$('#confirmModal').on('click', function (e) {
+				if ($(e.target).hasClass('modal')) {
+					$(this).modal('hide');
+				}
+			});
+
+			if (selectedCities.length > 0) {
+				$('#confirmModal').modal('show');
+
+				// Handle confirm delete
+				$('#confirmDelete').click(function () {
+					$.ajax({
+						url: '@Url.Action("DeleteSelectedCities", "City")',
+						type: 'POST',
+						contentType: 'application/json; charset=utf-8',
+						data: JSON.stringify(selectedCities),
+						headers: {
+							'RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val()
+						},
+						success: function (response) {
+							if (response.success) {
+								window.location.reload();
+							} else {
+								alert(response.message || "Error deleting cities.");
+							}
+						},
+						error: function (xhr, status, error) {
+							alert("An error occurred: " + error);
+						}
+					});
+
+					// Hide the modal
+					$('#confirmModal').modal('hide');
+				});
+			} else {
+				alert("Please select at least one city to delete.");
+			}
+		});
+
+		// Page Size Selector
+		$('#pageSizeSelector').change(function () {
+			var selectedPageSize = $(this).val();
+
+			var currentPage = $('#currentPage').val();
+			var sortingParameter = $('#sortingParameter').val();
+
+			var url = new URL(window.location.href);
+			var params = url.searchParams;
+
+			params.set('page', currentPage);
+			params.set('pageSize', selectedPageSize);
+			params.set('sortBy', sortingParameter);
+
+			url.search = params.toString();
+
+			window.location.href = url.toString();
+			/*
+
+			console.log("daima")
+
+			var selectedPageSize = $(this).val();
+
+			var currentPage = $('#currentPage').val();
+			var sortingParameter = $('#sortingParameter').val();
+
+			$.ajax({
+				url: '@Url.Action("Index", "City")',
+				type: 'GET',
+				data: { page: currentPage, pageSize: selectedPageSize, sortBy: sortingParameter },
+				success: function (result) {
+					$('body').html(result);
+				},
+				error: function (xhr, status, error) {
+					console.error("Error loading cities: " + error);
+				}
+			});
+			*/
+		});
+	});
+
+	
+
+</script>

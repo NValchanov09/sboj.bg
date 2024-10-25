@@ -93,12 +93,12 @@ namespace sbojWebApp.Controllers
 
             var pageSizeOptions = new List<SelectListItem>
             {
-                new SelectListItem { Value = "5", Text = "5", Selected = pageSize == 5 },
-                new SelectListItem { Value = "10", Text = "10", Selected = pageSize == 10 },
-                new SelectListItem { Value = "15", Text = "15", Selected = pageSize == 15 },
-                new SelectListItem { Value = "25", Text = "25", Selected = pageSize == 25 },
-                new SelectListItem { Value = "50", Text = "50", Selected = pageSize == 50 },
-                new SelectListItem { Value = $"{itemCount}", Text = "All", Selected = pageSize == itemCount }
+                new SelectListItem { Value = "5", Text = "5", Selected = (pageSize == 5) },
+                new SelectListItem { Value = "10", Text = "10", Selected = (pageSize == 10) },
+                new SelectListItem { Value = "15", Text = "15", Selected = (pageSize == 15) },
+                new SelectListItem { Value = "25", Text = "25", Selected = (pageSize == 25) },
+                new SelectListItem { Value = "50", Text = "50", Selected = (pageSize == 50) },
+                new SelectListItem { Value = $"{itemCount}", Text = "All", Selected = (pageSize == itemCount) }
             };
 
             ViewBag.PageSizes = pageSizeOptions;
@@ -277,10 +277,6 @@ namespace sbojWebApp.Controllers
 				return Json(new { success = false, message = "Error deleting cities: " + ex.Message });
 			}
 		}
-
-
-
-
 		private bool CityExists(int id)
         {
             return _context.Cities.Any(e => e.Id == id);
