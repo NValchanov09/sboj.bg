@@ -7,20 +7,23 @@ namespace sbojWebApp.Models
         public int Id { get; set; }
         public string? Name { get; set; }
         public string? Description { get; set; }
-        public string? ImagePath { get; set; }
+        public string? ImageURL { get; set; }
 
         [Url(ErrorMessage = "Please enter a valid Website URL")]
-        public string? Website { get; set; }
+		[MaxLength(100)]
+		public string? Website { get; set; }
         [Url(ErrorMessage = "Please enter a valid LinkedIn URL")]
-        public string? LinkedIn { get; set; }
+		[MaxLength(100)]
+		public string? LinkedIn { get; set; }
         [Url(ErrorMessage = "Please enter a valid Facebook URL")]
-        public string? Facebook { get; set; }
+		[MaxLength(100)]
+		public string? Facebook { get; set; }
         [Url(ErrorMessage = "Please enter a valid Instagram URL")]
-        public string? Instagram { get; set; }
+		[MaxLength(100)]
+		public string? Instagram { get; set; }
         [Phone(ErrorMessage = "Please enter a valid phone number")]
+        [MaxLength(20)]
         public string? PhoneNumber { get; set; }
-
-        public ICollection<AppUser> Recruiters { get; set; } = new List<AppUser>();
 
     }
 
