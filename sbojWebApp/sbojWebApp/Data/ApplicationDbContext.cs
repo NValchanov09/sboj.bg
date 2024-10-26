@@ -15,7 +15,6 @@ namespace sbojWebApp.Data
         public DbSet<JobPosition> JobPositions { get; set; }
         public DbSet<JobApplication> JobApplications { get; set; }
         public DbSet<Language> Languages { get; set; }
-        public DbSet<CoverLetter> CoverLetters { get; set; }
         public DbSet<AppUser> AppUsers { get; set; }
 
     }
