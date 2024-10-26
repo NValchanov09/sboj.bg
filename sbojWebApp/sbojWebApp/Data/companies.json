@@ -1,0 +1,24 @@
+[
+  {
+    "Id": 1,
+    "Name": "Nemetschek",
+    "Description": "The first company ever",
+    "ImageURL": "https://media.licdn.com/dms/image/v2/C4D0BAQFKbyx-RZa9IQ/company-logo_200_200/company-logo_200_200/0/1631360173062?e=1738195200&v=beta&t=lEEoHclghYQ3Wp22JA1DrF6pmxORDNqav-cQTlq48r0",
+    "Website": "https://www.nemetschek.bg/",
+    "LinkedIn": "https://www.linkedin.com/company/nemetschek-bulgaria/",
+    "Facebook": "https://www.facebook.com/NemetschekBulgaria/",
+    "Instagram": "https://www.instagram.com/nemetschek.bulgaria/",
+    "PhoneNumber": "+359 2 421 0990"
+  },
+  {
+    "Id": 2,
+    "Name": "Bosch",
+    "Description": "Bachkam dosta",
+    "ImageURL": "https://media.licdn.com/dms/image/v2/D4E0BAQFZSc1rOABvMw/company-logo_200_200/company-logo_200_200/0/1722849161753/bosch_logo?e=1738195200&v=beta&t=JfzDjx1cXLPteGMBJSfDRI7H9ejoUWUG-GvK8gokqcc",
+    "Website": "https://www.bosch.bg/",
+    "LinkedIn": "https://www.linkedin.com/company/bosch/",
+    "Facebook": "https://www.facebook.com/BoschGlobal/",
+    "Instagram": "https://www.instagram.com/boschglobal/",
+    "PhoneNumber": "0 700 20 817"
+  }
+]

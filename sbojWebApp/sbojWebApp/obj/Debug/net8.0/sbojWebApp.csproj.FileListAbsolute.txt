@@ -278,3 +278,4 @@ C:\Users\GRIGS\source\repos\NValchanov09\sboj.bg\sbojWebApp\sbojWebApp\bin\Debug
 C:\Users\GRIGS\Source\Repos\NValchanov09\sboj.bg\sbojWebApp\sbojWebApp\bin\Debug\net8.0\CsvHelper.dll
 C:\Users\GRIGS\Source\Repos\NValchanov09\sboj.bg\sbojWebApp\sbojWebApp\bin\Debug\net8.0\Newtonsoft.Json.dll
 C:\Users\GRIGS\Source\Repos\NValchanov09\sboj.bg\sbojWebApp\sbojWebApp\bin\Debug\net8.0\Data\cities.json
+C:\Users\GRIGS\Source\Repos\NValchanov09\sboj.bg\sbojWebApp\sbojWebApp\bin\Debug\net8.0\Data\companies.json

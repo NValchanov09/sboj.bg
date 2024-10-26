@@ -6,9 +6,14 @@ namespace sbojWebApp.Models
 {
     public class AppUser : IdentityUser
     {
+        [Required]
+        [StringLength(50, ErrorMessage = "The maximum length for the name is 50 characters.")]
         public string? FirstName { get; set; }
+        [Required]
+        [StringLength(50, ErrorMessage = "The maximum length for the name is 50 characters.")]
         public string? LastName { get; set; }
-
+        [Required]
+        [StringLength(2048, ErrorMessage = "The maximum length for the URL is 2048 characters.")]
         public string? ProfileImageURL { get; set; }
         public DateTime CreationDate { get; set; } = DateTime.Now;
 
@@ -19,8 +24,5 @@ namespace sbojWebApp.Models
         [ForeignKey("Company")]
         public int? CompanyId { get; set; }
         public Company? Company { get; set; }
-
-        public ICollection<JobApplication> AppliedFor { get; set; } = new List<JobApplication>();
-        public ICollection<JobPosition> Added { get; set; } = new List<JobPosition>();
     }
 }
