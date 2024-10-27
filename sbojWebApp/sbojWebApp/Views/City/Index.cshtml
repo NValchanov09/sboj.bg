@@ -10,13 +10,6 @@
 	{
 		pager = ViewBag.Pager;
 	}
-
-	Sorter sorter = new Sorter();
-
-	if(ViewBag.Sorter != null)
-	{
-		sorter = ViewBag.Sorter;
-	}
 }
 
 <style>
@@ -326,7 +319,7 @@ table.table td:last-child{
 							</label>
 
 							<select id="pageSizeSelector" class="form-control form-select-sm" style="width: auto; display: inline-block;">
-								@foreach (var item in ViewBag.PageSizes)
+								@foreach (var item in pager.PageSizeOptions)
 								{
 									<option value="@item.Value" selected="@item.Selected">@item.Text</option>
 								}
@@ -334,7 +327,7 @@ table.table td:last-child{
 							</select>
 
 							<input type="hidden" id="currentPage" value="@(pager.CurrentPage)" />
-							<input type="hidden" id="sortingParameter" value="@(sorter.SortingParameter)" />
+							<input type="hidden" id="sortingParameter" value="@(pager.SortingParameter)" />
 						</div>
 					</div>
 				</div>
@@ -389,25 +382,25 @@ table.table td:last-child{
                         @if (pager.CurrentPage > 1)
                         {
                             <li class="page-item">
-								<a class="page-link" asp-controller="City" asp-action="Index" asp-route-page="1" asp-route-pageSize="@(pager.PageSize)" asp-route-sortBy="@(sorter.SortingParameter)">First</a>
+								<a class="page-link" asp-controller="City" asp-action="Index" asp-route-page="1" asp-route-pageSize="@(pager.PageSize)" asp-route-sortBy="@(pager.SortingParameter)">First</a>
                             </li>
                             <li class="page-item">
-								<a class="page-link" asp-controller="City" asp-action="Index" asp-route-page="@(pager.CurrentPage - 1)" asp-route-pageSize="@(pager.PageSize)" asp-route-sortBy="@(sorter.SortingParameter)">Previous</a>
+								<a class="page-link" asp-controller="City" asp-action="Index" asp-route-page="@(pager.CurrentPage - 1)" asp-route-pageSize="@(pager.PageSize)" asp-route-sortBy="@(pager.SortingParameter)">Previous</a>
                             </li>
                         }
                         @for (var pg = pager.StartPage; pg <= pager.EndPage; pg++)
                         {
                             <li class="page-item @(pg == pager.CurrentPage ? "active" : "")">
-								<a class="page-link" asp-controller="City" asp-action="Index" asp-route-page="@pg" asp-route-pageSize="@(pager.PageSize)" asp-route-sortBy="@(sorter.SortingParameter)"> @pg </a>
+								<a class="page-link" asp-controller="City" asp-action="Index" asp-route-page="@pg" asp-route-pageSize="@(pager.PageSize)" asp-route-sortBy="@(pager.SortingParameter)"> @pg </a>
                             </li>
                         }
                         @if (pager.CurrentPage < pager.TotalPages)
                         {
                             <li class="page-item">
-								<a class="page-link" asp-controller="City" asp-action="Index" asp-route-page="@(pager.CurrentPage + 1)" asp-route-pageSize="@(pager.PageSize)" asp-route-sortBy="@(sorter.SortingParameter)">Next</a>
+								<a class="page-link" asp-controller="City" asp-action="Index" asp-route-page="@(pager.CurrentPage + 1)" asp-route-pageSize="@(pager.PageSize)" asp-route-sortBy="@(pager.SortingParameter)">Next</a>
                             </li>
                             <li class="page-item">
-								<a class="page-link" asp-controller="City" asp-action="Index" asp-route-page="@(pager.TotalPages)" asp-route-pageSize="@(pager.PageSize)" asp-route-sortBy="@(sorter.SortingParameter)">Last</a>
+								<a class="page-link" asp-controller="City" asp-action="Index" asp-route-page="@(pager.TotalPages)" asp-route-pageSize="@(pager.PageSize)" asp-route-sortBy="@(pager.SortingParameter)">Last</a>
                             </li>
                         }
                     </ul>

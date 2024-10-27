@@ -1,4 +1,6 @@
-﻿namespace sbojWebApp.Models
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+
+namespace sbojWebApp.Models
 {
     public class Pager
     {
@@ -13,12 +15,16 @@
         public int StartItemsShowing { get; set; }
         public int EndItemsShowing { get; set; }
 
+        public string SortingParameter { get; set; }
+
+        public List<SelectListItem> PageSizeOptions { get; set; }
+
         public Pager()
         {
             
         }
 
-        public Pager(int startItemsShowing, int endItemsShowing, int totalItems, int page, int pageSize)
+        public Pager(int startItemsShowing, int endItemsShowing, int totalItems, int page, int pageSize, string sortBy, List<SelectListItem> options)
         {
             int totalPages = (int)Math.Ceiling((decimal)totalItems / (decimal)pageSize);
             int currentPage = page;
@@ -49,6 +55,8 @@
             EndPage = endPage;
             StartItemsShowing = Math.Min(startItemsShowing, TotalItems);
             EndItemsShowing = Math.Min(endItemsShowing, TotalItems);
+            SortingParameter = sortBy;
+            PageSizeOptions = options;
         }
     }
 }

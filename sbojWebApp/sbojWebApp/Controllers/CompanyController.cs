@@ -85,10 +85,7 @@ namespace sbojWebApp.Controllers
 
 			int itemCount = companies.Count();
 
-			Console.Write("THE CURRENT ITEM COUNT IS : ");
-			Console.WriteLine(itemCount);
-
-			var pageSizeOptions = new List<SelectListItem>
+			var options = new List<SelectListItem>
 			{
 				new SelectListItem { Value = "5", Text = "5", Selected = pageSize == 5 },
 				new SelectListItem { Value = "10", Text = "10", Selected = pageSize == 10 },
@@ -98,7 +95,7 @@ namespace sbojWebApp.Controllers
 				new SelectListItem { Value = $"{itemCount}", Text = "All", Selected = pageSize == itemCount }
 			};
 
-			ViewBag.PageSizes = pageSizeOptions;
+			ViewBag.PageSizes = options;
 
 			switch (sortBy.ToLower())
 			{
@@ -136,13 +133,9 @@ namespace sbojWebApp.Controllers
 			int startItemsShowing = itemsSkipped + 1;
 			int endItemsShowing = startItemsShowing + pageSize - 1;
 
-			var pager = new Pager(startItemsShowing, endItemsShowing, itemCount, page, pageSize);
+			var pager = new Pager(startItemsShowing, endItemsShowing, itemCount, page, pageSize, sortBy, options);
 
 			this.ViewBag.Pager = pager;
-
-			var sorter = new Sorter(sortBy);
-
-			this.ViewBag.Sorter = sorter;
 
 			var pageItems = companies.Skip(itemsSkipped).Take(pageSize).ToList();
 
